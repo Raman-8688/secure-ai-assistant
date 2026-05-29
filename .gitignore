@@ -17,7 +17,7 @@ mvnw.cmd
 
 # Secret files
 application-secret.properties
-aiapi/src/main/resources/application-secret.properties
+backend/src/main/resources/secret.properties
 
 # OS
 .DS_Store
