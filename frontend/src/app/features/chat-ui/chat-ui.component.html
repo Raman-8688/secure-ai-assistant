@@ -1,4 +1,28 @@
-<div class="chat-app">
+<!-- src/app/features/chat-ui/chat-ui.component.html -->
+<!-- REPLACE your existing chat-ui.component.html with this -->
+
+<div class="chat-app" [class.offline]="!isOnline">
+  <!-- ── Toast Notification ──────────────────────────────────── -->
+  <div
+    class="toast"
+    [class.toast--visible]="toastVisible"
+    [class.toast--error]="toastType === 'error'"
+    [class.toast--warning]="toastType === 'warning'"
+    [class.toast--info]="toastType === 'info'"
+  >
+    <span class="toast-icon">
+      {{ toastType === "warning" ? "📶" : toastType === "error" ? "⚠️" : "ℹ️" }}
+    </span>
+    <span class="toast-text">{{ toastMessage }}</span>
+    <button class="toast-close" (click)="hideToast()">✕</button>
+  </div>
+
+  <!-- ── Offline Banner ─────────────────────────────────────── -->
+  <div class="offline-banner" *ngIf="!isOnline">
+    <span>📵 You are offline. Check your internet connection.</span>
+  </div>
+
+  <!-- ── Header ─────────────────────────────────────────────── -->
   <div class="chat-header">
     <div class="header-content">
       <div class="ai-avatar">AI</div>
@@ -7,21 +31,95 @@
         <p>Powered by Raman</p>
       </div>
     </div>
-    <button class="logout-btn" type="button" (click)="logout()">
-    <span class="logout-icon">↗</span>
-    <span>Logout</span>
-  </button>
+    <div class="header-actions">
+      <button
+        class="history-btn"
+        (click)="showHistory = !showHistory"
+        title="Chat History"
+      >
+        <span class="history-icon">🕐</span>
+        <span>History</span>
+        <span class="history-count" *ngIf="historyItems.length > 0">{{
+          historyItems.length
+        }}</span>
+      </button>
+      <button class="logout-btn" type="button" (click)="logout()">
+        <span class="logout-icon">↗</span>
+        <span>Logout</span>
+      </button>
+    </div>
   </div>
 
-  <div class="chat-messages" #chatMessagesContainer>
-    <app-chat-message
-      *ngFor="let message of messages"
-      [message]="message"
-    ></app-chat-message>
-  </div>
+  <!-- ── Main Layout ────────────────────────────────────────── -->
+  <div class="chat-layout">
+    <!-- ── History Sidebar ──────────────────────────────────── -->
+    <div class="history-sidebar" [class.history-sidebar--open]="showHistory">
+      <div class="history-header">
+        <h3>Chat History</h3>
+        <button class="sidebar-close" (click)="showHistory = false">✕</button>
+      </div>
 
-  <app-chat-input
-    [isLoading]="isLoading"
-    (send)="sendMessage($event)"
-  ></app-chat-input>
+      <div class="history-loading" *ngIf="isLoadingHistory">
+        <div class="spinner-sm"></div>
+        <span>Loading history...</span>
+      </div>
+
+      <div
+        class="history-empty"
+        *ngIf="!isLoadingHistory && historyItems.length === 0"
+      >
+        <span>🗂️</span>
+        <p>No history yet. Start chatting!</p>
+      </div>
+
+      <div
+        class="history-list"
+        *ngIf="!isLoadingHistory && historyItems.length > 0"
+      >
+        <div
+          class="history-item"
+          *ngFor="let item of historyItems"
+          (click)="loadHistoryChat(item)"
+        >
+          <div class="history-item-question">
+            {{ item.question | slice: 0 : 60
+            }}{{ item.question.length > 60 ? "..." : "" }}
+          </div>
+          <div class="history-item-meta">
+            <span class="history-date">{{ formatDate(item.createdAt) }}</span>
+            <button
+              class="history-delete"
+              (click)="deleteHistoryItem(item.id, $event)"
+              [class.deleting]="isDeletingId === item.id"
+              title="Delete"
+            >
+              {{ isDeletingId === item.id ? "..." : "🗑" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Sidebar Overlay (mobile) ─────────────────────────── -->
+    <div
+      class="sidebar-overlay"
+      *ngIf="showHistory"
+      (click)="showHistory = false"
+    ></div>
+
+    <!-- ── Chat Area ─────────────────────────────────────────── -->
+    <div class="chat-main">
+      <div class="chat-messages" #chatMessagesContainer>
+        <app-chat-message
+          *ngFor="let message of messages"
+          [message]="message"
+        ></app-chat-message>
+      </div>
+
+      <app-chat-input
+        [isLoading]="isLoading"
+        (send)="sendMessage($event)"
+      ></app-chat-input>
+    </div>
+  </div>
 </div>
