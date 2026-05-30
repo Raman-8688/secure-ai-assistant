@@ -170,3 +170,31 @@ button:disabled {
   width: 20px;
   height: 20px;
 }
+.btn-github {
+  width: 100%;
+  padding: 12px;
+  background: #24292e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
+  margin-bottom: 10px;
+}
+
+.btn-github:hover {
+  background: #1a1e22;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.github-icon {
+  width: 20px;
+  height: 20px;
+}
