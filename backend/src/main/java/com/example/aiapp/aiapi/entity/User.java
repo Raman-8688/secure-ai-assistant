@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
  * - email verification status
  * - OTP for email verification
  * - role for future authorization
+ * - OAuth2 provider info (for Google/GitHub login)
  */
 @Entity
 @Table(name = "users")
@@ -44,8 +45,8 @@ public class User {
     /*
      * Password will not be stored as plain text.
      * We will store BCrypt encrypted password.
+     * For OAuth2 users, this can be null.
      */
-    @Column(nullable = false)
     private String password;
 
     /*
@@ -58,12 +59,14 @@ public class User {
     /*
      * False means user registered but email not verified yet.
      * True means user verified OTP successfully.
+     * OAuth2 users are automatically verified.
      */
     @Column(nullable = false)
     private boolean emailVerified = false;
 
     /*
      * OTP code sent to user email.
+     * Only for email/password registration.
      */
     private String verificationOtp;
 
@@ -79,6 +82,25 @@ public class User {
     private LocalDateTime createdAt;
 
     /*
+     * OAuth2 Provider (google, github, etc.)
+     * Null for email/password users.
+     */
+    private String provider;
+
+    /*
+     * OAuth2 Provider User ID (sub from Google, id from GitHub)
+     * Null for email/password users.
+     */
+    @Column(name = "provider_id")
+    private String providerId;
+
+    /*
+     * Last login timestamp
+     */
+    @Column(name = "last_login")
+    private LocalDateTime lastLogin;
+
+    /*
      * Automatically set createdAt before saving user first time.
      */
     @PrePersist
@@ -86,8 +108,14 @@ public class User {
         this.createdAt = LocalDateTime.now();
     }
 
+    // ========== Getters and Setters ==========
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -118,6 +146,10 @@ public class User {
         return role;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public boolean isEmailVerified() {
         return emailVerified;
     }
@@ -144,5 +176,33 @@ public class User {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+    public String getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
+    }
+
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
     }
 }
