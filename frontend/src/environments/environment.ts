@@ -1,4 +1,7 @@
+// src/environments/environment.ts
+// REPLACE your existing environment.ts
+
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:8080/api',
+  apiUrl: 'http://localhost:8080'
 };
