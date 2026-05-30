@@ -69,4 +69,8 @@ export class LoginComponent {
     // Redirect to backend OAuth2 endpoint
     window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   }
+
+  loginWithGitHub(): void {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/github';
+  }
 }
