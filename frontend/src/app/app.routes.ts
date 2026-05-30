@@ -6,32 +6,38 @@ import { VerifyEmailComponent } from './features/auth/verify-email/verify-email.
 
 import { authGuard } from './core/guards/auth.guard';
 import { ChatUiComponent } from './features/chat-ui/chat-ui.component';
+import { CallbackComponent } from './features/auth/callback/callback.component';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
   },
   {
     path: 'verify-email',
-    component: VerifyEmailComponent
+    component: VerifyEmailComponent,
+  },
+  {
+    path: 'auth/callback', // Add this route for OAuth2 callback
+    component: CallbackComponent,
   },
   {
     path: 'chat',
     component: ChatUiComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
+
   {
     path: '**',
-    redirectTo: 'login'
-  }
+    redirectTo: 'login',
+  },
 ];
