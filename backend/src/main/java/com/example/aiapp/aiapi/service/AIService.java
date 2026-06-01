@@ -68,6 +68,12 @@ public class AIService {
     }
     **/
 
+    /**
+     * AI added to the deep
+     * @param prompt
+     * @return
+     */
+
 
 
    public String getAIResponse(String prompt) {
