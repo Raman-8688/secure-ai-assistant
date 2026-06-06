@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../../core/services/auth.service';
 import { LoginRequest } from '../../../core/models/auth.model';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -64,13 +65,11 @@ export class LoginComponent {
     });
   }
 
-  // Add this method for Google Login
   loginWithGoogle(): void {
-    // Redirect to backend OAuth2 endpoint
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    window.location.href = `${environment.apiUrl}/oauth2/authorization/google`;
   }
 
   loginWithGitHub(): void {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/github';
+    window.location.href = `${environment.apiUrl}/oauth2/authorization/github`;
   }
 }

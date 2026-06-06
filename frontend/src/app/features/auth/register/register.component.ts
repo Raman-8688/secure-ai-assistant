@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../../core/services/auth.service';
 import { RegisterRequest } from '../../../core/models/auth.model';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -61,9 +62,7 @@ export class RegisterComponent {
     });
   }
 
-  // Add this method for Google Signup
   signupWithGoogle(): void {
-    // Redirect to backend OAuth2 endpoint
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    window.location.href = `${environment.apiUrl}/oauth2/authorization/google`;
   }
 }

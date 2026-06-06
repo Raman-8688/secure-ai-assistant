@@ -8,6 +8,7 @@ import {
   AuthResponse,
   ResendOtpRequest,
 } from '../models/auth.model';
+import { environment } from '../../../environments/environment';
 
 /*
  * AuthService handles all authentication API calls.
@@ -27,7 +28,8 @@ export class AuthService {
   /*
    * Base URL for backend authentication APIs.
    */
-  private readonly authApiUrl = 'http://localhost:8080/api/auth';
+  //private readonly authApiUrl = 'http://localhost:8080/api/auth';
+   private readonly authApiUrl = `${environment.apiUrl}/api/auth`; 
 
   /*
    * Token key used in localStorage.
