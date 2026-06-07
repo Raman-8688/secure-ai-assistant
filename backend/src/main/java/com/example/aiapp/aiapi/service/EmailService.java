@@ -4,33 +4,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
-/*
- * EmailService sends OTP verification mail.
- */
 @Service
+@Slf4j
 public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
 
-    /*
-     * Send OTP mail to user.
-     */
     public void sendOtpEmail(String toEmail, String otp) {
+        log.info("Sending OTP email to: {}", toEmail);
 
-        SimpleMailMessage message = new SimpleMailMessage();
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(toEmail);
+            message.setSubject("AI Assistant - Your OTP Code");
+            message.setText(String.format(
+                    "Hello,\n\n" +
+                            "Your OTP for email verification is: %s\n\n" +
+                            "This OTP is valid for 10 minutes.\n\n" +
+                            "If you didn't request this, please ignore this email.\n\n" +
+                            "Best regards,\nAI Assistant Team",
+                    otp
+            ));
 
-        message.setTo(toEmail);
+            mailSender.send(message);
+            log.info("OTP email sent successfully to: {}", toEmail);
 
-        message.setSubject("AI Assistant Email Verification OTP");
-
-        message.setText(
-                "Hello,\n\n" +
-                        "Your OTP for AI Assistant verification is: " + otp +
-                        "\n\nThis OTP expires in 10 minutes."
-        );
-
-        mailSender.send(message);
+        } catch (Exception e) {
+            log.error("Failed to send email to {}: {}", toEmail, e.getMessage());
+            log.info("=========================================");
+            log.info("⚠️ EMAIL FAILED - Use this OTP for testing: {}", otp);
+            log.info("=========================================");
+        }
     }
 }

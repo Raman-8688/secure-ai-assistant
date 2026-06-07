@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -19,36 +22,81 @@ public class AuthController {
     private AuthService authService;
 
     @Autowired
-    private UserRepository userRepository;  // Add this
+    private UserRepository userRepository;
 
     @PostMapping("/register")
-    public String register(@Valid @RequestBody RegisterRequest request) {
-        return authService.register(request);
+    public ResponseEntity<Map<String, String>> register(@Valid @RequestBody RegisterRequest request) {
+        String result = authService.register(request);
+        Map<String, String> response = new HashMap<>();
+
+        if (result.contains("successful")) {
+            response.put("message", result);
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("error", result);
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @PostMapping("/verify-email")
-    public String verifyEmail(@Valid @RequestBody VerifyEmailRequest request) {
-        return authService.verifyEmail(request);
+    public ResponseEntity<Map<String, String>> verifyEmail(@Valid @RequestBody VerifyEmailRequest request) {
+        String result = authService.verifyEmail(request);
+        Map<String, String> response = new HashMap<>();
+
+        if (result.contains("successfully")) {
+            response.put("message", result);
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("error", result);
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @PostMapping("/login")
-    public AuthResponse login(@Valid @RequestBody LoginRequest request) {
-        return authService.login(request);
+    public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody LoginRequest request) {
+        AuthResponse response = authService.login(request);
+        Map<String, Object> result = new HashMap<>();
+
+        if (response.getToken() != null) {
+            result.put("token", response.getToken());
+            result.put("message", response.getMessage());
+            return ResponseEntity.ok(result);
+        } else {
+            result.put("error", response.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+        }
     }
 
     @PostMapping("/resend-otp")
-    public String resendOtp(@Valid @RequestBody ResendOtpRequest request) {
-        return authService.resendOtp(request);
+    public ResponseEntity<Map<String, String>> resendOtp(@Valid @RequestBody ResendOtpRequest request) {
+        String result = authService.resendOtp(request);
+        Map<String, String> response = new HashMap<>();
+
+        if (result.contains("success")) {
+            response.put("message", result);
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("error", result);
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @GetMapping("/me")
-    public ResponseEntity<User> getCurrentUser(Authentication authentication) {
+    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
         if (authentication == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Not authenticated"));
         }
+
         String email = authentication.getName();
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findByEmail(email).orElse(null);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "User not found"));
+        }
+
+        user.setPassword(null);
+        user.setVerificationOtp(null);
+
         return ResponseEntity.ok(user);
     }
 }

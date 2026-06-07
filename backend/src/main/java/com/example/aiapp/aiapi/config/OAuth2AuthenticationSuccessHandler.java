@@ -1,7 +1,5 @@
 package com.example.aiapp.aiapi.config;
 
-
-
 import com.example.aiapp.aiapi.entity.User;
 import com.example.aiapp.aiapi.repository.UserRepository;
 import com.example.aiapp.aiapi.service.JwtService;
@@ -10,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -28,33 +27,32 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
+    @Value("${app.frontend.url:http://localhost:4200}")
+    private String frontendUrl;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
         OAuth2User oauth2User = oauthToken.getPrincipal();
-        String provider = oauthToken.getAuthorizedClientRegistrationId(); // "google" or "github"
+        String provider = oauthToken.getAuthorizedClientRegistrationId();
 
         log.info("OAuth2 login successful for provider: {}", provider);
+        log.debug("OAuth2 User Attributes: {}", oauth2User.getAttributes());
 
         String email = null;
         String name = null;
 
-        // Extract user info based on provider (Google and GitHub have different attribute names)
         if ("google".equalsIgnoreCase(provider)) {
             email = oauth2User.getAttribute("email");
             name = oauth2User.getAttribute("name");
         } else if ("github".equalsIgnoreCase(provider)) {
-            // GitHub uses "login" for username, but may need email from email endpoint
             String githubLogin = oauth2User.getAttribute("login");
-            name = oauth2User.getAttribute("name") != null ? oauth2User.getAttribute("name") : githubLogin;
-
-            // GitHub might not always return email in the basic profile
-            // The user:email scope should include it, but fallback to login if needed
+            name = oauth2User.getAttribute("name");
+            if (name == null) name = githubLogin;
             email = oauth2User.getAttribute("email");
             if (email == null) {
-                // If email not provided, use GitHub username as unique identifier
                 email = githubLogin + "@github.com";
                 log.warn("Email not provided by GitHub, using: {}", email);
             }
@@ -62,7 +60,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         if (email == null) {
             log.error("Could not extract email from OAuth2 provider: {}", provider);
-            response.sendRedirect("http://localhost:4200/login?error=email_required");
+            response.sendRedirect(frontendUrl + "/login?error=email_required");
             return;
         }
 
@@ -73,17 +71,15 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             user = existingUser.get();
             log.info("Existing user logged in via {}: {}", provider, email);
 
-            // Update provider info if this is first time using this provider
             if (user.getProvider() == null) {
                 user.setProvider(provider);
                 userRepository.save(user);
             }
         } else {
-            // Create new user
             user = new User();
             user.setEmail(email);
             user.setName(name != null ? name : email.split("@")[0]);
-            user.setEmailVerified(true); // OAuth2 users are verified
+            user.setEmailVerified(true);
             user.setProvider(provider);
             user.setRole("USER");
             user.setCreatedAt(LocalDateTime.now());
@@ -92,8 +88,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
 
         String jwtToken = jwtService.generateToken(user.getEmail());
+        String redirectUrl = frontendUrl + "/auth/callback?token=" + jwtToken;
 
-        String redirectUrl = "http://localhost:4200/auth/callback?token=" + jwtToken;
+        log.info("Redirecting to: {}", redirectUrl);
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
 }
