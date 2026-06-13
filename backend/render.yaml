@@ -1,0 +1,14 @@
+# render.yaml
+services:
+  - type: web
+    name: secure-ai-assistant-backend
+    runtime: image
+    repo: https://github.com/Raman-8688/secure-ai-assistant
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: JAVA_OPTS
+        value: -Xmx512m -Xms256m
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -jar target/aiapi-0.0.1-SNAPSHOT.jar

@@ -9,7 +9,7 @@
 
 .auth-card {
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 20px;
@@ -33,6 +33,7 @@
   justify-content: center;
   margin: 0 auto 14px;
   font-weight: 700;
+  font-size: 20px;
 }
 
 .brand h1 {
@@ -67,6 +68,7 @@ input {
   margin-bottom: 16px;
   font-size: 14px;
   outline: none;
+  transition: all 0.2s;
 }
 
 input:focus {
@@ -74,7 +76,7 @@ input:focus {
   box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.15);
 }
 
-button {
+button[type="submit"] {
   height: 46px;
   border: none;
   border-radius: 12px;
@@ -83,43 +85,21 @@ button {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
-button:disabled {
+button[type="submit"]:hover:not(:disabled) {
+  background: #0e8e6e;
+}
+
+button[type="submit"]:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.success {
-  color: #047857;
-  font-size: 14px;
-  margin-top: 16px;
-  text-align: center;
-}
-
-.error {
-  color: #dc2626;
-  font-size: 14px;
-  margin-top: 16px;
-  text-align: center;
-}
-
-.switch {
-  margin-top: 22px;
-  text-align: center;
-  font-size: 14px;
-  color: #6b7280;
-}
-
-.switch a {
-  color: #10a37f;
-  font-weight: 600;
-  text-decoration: none;
-}
-
 .divider {
   text-align: center;
-  margin: 20px 0;
+  margin: 24px 0 20px;
   position: relative;
 }
 
@@ -128,9 +108,9 @@ button:disabled {
   content: "";
   position: absolute;
   top: 50%;
-  width: calc(50% - 30px);
+  width: calc(50% - 70px);
   height: 1px;
-  background: #e0e0e0;
+  background: #e5e7eb;
 }
 
 .divider::before {
@@ -143,35 +123,85 @@ button:disabled {
 
 .divider span {
   background: white;
-  padding: 0 15px;
-  color: #666;
-  font-size: 14px;
+  padding: 0 12px;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
-.btn-google {
-  width: 100%;
-  padding: 12px;
+.oauth-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.btn-oauth {
+  flex: 1;
+  height: 40px;
   background: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  font-size: 14px;
+  gap: 8px;
+  font-size: 13px;
   font-weight: 500;
-  transition: all 0.3s;
-  margin-bottom: 15px;
+  transition: all 0.2s;
+  color: #374151;
 }
 
-.btn-google:hover {
-  background: #f8f9fa;
-  border-color: #4285f4;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.btn-oauth:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
 }
 
-.google-icon {
-  width: 20px;
-  height: 20px;
+.btn-github {
+  background: #24292e;
+  color: white;
+  border-color: #24292e;
+}
+
+.btn-github:hover {
+  background: #1a1e22;
+  border-color: #1a1e22;
+}
+
+.oauth-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.success {
+  color: #047857;
+  font-size: 13px;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 13px;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.switch {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.switch a {
+  color: #10a37f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.switch a:hover {
+  text-decoration: underline;
 }

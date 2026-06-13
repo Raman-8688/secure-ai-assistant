@@ -13,6 +13,18 @@ target/
 .springBeans
 .sts4-cache
 
+# Secret files
+.env
+*.env
+.env.local
+.env.production
+
+
+# Secrets (never commit to Git!)
+secrets.properties
+*.properties.secret
+
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -32,3 +44,32 @@ build/
 ### VS Code ###
 .vscode/
 /src/main/resources/secret.properties
+
+
+# Secret files (NEVER commit!)
+secrets.properties
+*.env
+.env.*
+application-local.properties
+
+# Build files
+target/
+*.class
+*.jar
+*.war
+
+# Logs
+logs/
+*.log
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -56,14 +56,16 @@ export class RegisterComponent {
       },
       error: (error) => {
         this.isLoading = false;
-        this.errorMessage =
-         error.userMessage || 'Registration failed';
-          
+        this.errorMessage = error.userMessage || 'Registration failed';
       },
     });
   }
 
   signupWithGoogle(): void {
     window.location.href = `${environment.apiUrl}/oauth2/authorization/google`;
+  }
+
+  signupWithGitHub(): void {
+    window.location.href = `${environment.apiUrl}/oauth2/authorization/github`;
   }
 }
