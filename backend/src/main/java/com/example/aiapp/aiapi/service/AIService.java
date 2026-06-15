@@ -95,7 +95,7 @@ public class AIService {
 
        // Update to OpenAI-compatible format
        Map<String, Object> body = Map.of(
-               "model", "gpt-3.5-turbo-16k",  // or "gpt-4o-mini" for better quality gpt-3.5-turbo
+               "model", "gpt-3.5-turbo",  // or "gpt-4o-mini" for better quality   gpt-3.5-turbo-16k
                "messages", List.of(
                        Map.of("role", "user", "content", prompt)
                )
