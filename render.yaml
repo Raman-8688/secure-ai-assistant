@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: secure-ai-assistant-backend
+    runtime: docker
+    repo: https://github.com/Raman-8688/secure-ai-assistant
+    plan: free
+    dockerfilePath: ./Dockerfile    # Same directory, simple path
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: JAVA_OPTS
+        value: -Xmx512m -Xms256m
