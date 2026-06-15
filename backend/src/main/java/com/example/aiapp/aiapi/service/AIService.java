@@ -68,8 +68,17 @@ public class AIService {
     }
     **/
 
+
+
+
     /**
      * AI added to the deep
+     * Map<String, Object> body = Map.of(
+     *     "model", "gpt-3.5-turbo-16k",  // Alternative 1
+     *     // "model", "gpt-4o-mini",     // Alternative 2
+     *     // "model", "gpt-4",           // Alternative 3
+     *     "messages", List.of(...)
+     * );
      * @param prompt
      * @return
      */
@@ -86,7 +95,7 @@ public class AIService {
 
        // Update to OpenAI-compatible format
        Map<String, Object> body = Map.of(
-               "model", "gpt-3.5-turbo",  // or "gpt-4o-mini" for better quality
+               "model", "gpt-3.5-turbo-16k",  // or "gpt-4o-mini" for better quality gpt-3.5-turbo
                "messages", List.of(
                        Map.of("role", "user", "content", prompt)
                )
