@@ -3,18 +3,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f7f7f8;
+  background: var(--bg-base);
   padding: 20px;
+  transition: background 0.3s ease;
 }
 
 .auth-card {
   width: 100%;
   max-width: 420px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
   border-radius: 20px;
   padding: 32px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-md);
 }
 
 .brand {
@@ -26,25 +27,28 @@
   width: 48px;
   height: 48px;
   border-radius: 14px;
-  background: #10a37f;
+  background: linear-gradient(135deg, #1a6b5a, #0d9668);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 14px;
   font-weight: 700;
+  font-size: 18px;
 }
 
 .brand h1 {
   margin: 0;
-  font-size: 26px;
-  color: #111827;
+  font-size: 24px;
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .brand p {
   margin: 8px 0 0;
-  color: #6b7280;
-  font-size: 14px;
+  color: var(--text-muted);
+  font-size: 13px;
 }
 
 form {
@@ -54,71 +58,111 @@ form {
 
 label {
   margin-bottom: 6px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-secondary);
 }
 
 input {
-  height: 44px;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
+  height: 42px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: 11px;
   padding: 0 14px;
   margin-bottom: 16px;
-  font-size: 14px;
+  font-size: 13.5px;
+  color: var(--text-primary);
   outline: none;
+  transition: all 0.2s;
+  font-family: inherit;
+  box-sizing: border-box;
+  width: 100%;
 }
 
+input::placeholder { color: var(--text-hint); }
+
 input:focus {
-  border-color: #10a37f;
-  box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.15);
+  border-color: var(--accent-border);
+  background: var(--accent-subtle);
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.1);
 }
 
 button {
-  height: 46px;
+  height: 44px;
   border: none;
-  border-radius: 12px;
-  background: #10a37f;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #059669, #10b981);
   color: white;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  width: 100%;
+}
+
+button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #047857, #059669);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16,185,129,0.3);
 }
 
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
+  transform: none;
 }
 
 .resend-btn {
-  width: 100%;
-  margin-top: 12px;
-  background: #111827;
+  margin-top: 10px;
+  background: var(--bg-card) !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-default) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+.resend-btn:hover:not(:disabled) {
+  background: var(--accent-subtle) !important;
+  color: var(--accent) !important;
+  border-color: var(--accent-border) !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .success {
-  color: #047857;
-  font-size: 14px;
-  margin-top: 16px;
+  color: var(--accent);
+  font-size: 12.5px;
+  margin-top: 14px;
   text-align: center;
+  padding: 8px 12px;
+  background: var(--accent-subtle);
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
 }
 
 .error {
-  color: #dc2626;
-  font-size: 14px;
-  margin-top: 16px;
+  color: var(--danger);
+  font-size: 12.5px;
+  margin-top: 14px;
   text-align: center;
+  padding: 8px 12px;
+  background: var(--danger-subtle);
+  border: 1px solid rgba(248,113,113,0.2);
+  border-radius: 8px;
 }
 
 .switch {
-  margin-top: 22px;
+  margin-top: 18px;
   text-align: center;
-  font-size: 14px;
-  color: #6b7280;
+  font-size: 12.5px;
+  color: var(--text-muted);
 }
 
 .switch a {
-  color: #10a37f;
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
 }
+
+.switch a:hover { text-decoration: underline; }

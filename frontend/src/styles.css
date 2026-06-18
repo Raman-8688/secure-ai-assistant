@@ -1,1 +1,146 @@
 /* You can add global styles to this file, and also import other style files */
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL THEME VARIABLES
+   Applied to entire app via [data-theme="dark"] on <body>
+   Default = dark (matches your login page)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── DARK THEME (default) ── */
+:root,
+[data-theme="dark"] {
+  --bg-base:        #0a0d14;
+  --bg-surface:     #0d1117;
+  --bg-elevated:    #111622;
+  --bg-card:        rgba(255,255,255,0.03);
+  --bg-input:       rgba(255,255,255,0.04);
+
+  --border-subtle:  rgba(255,255,255,0.06);
+  --border-default: rgba(255,255,255,0.09);
+  --border-strong:  rgba(255,255,255,0.15);
+
+  --text-primary:   #f0f4f8;
+  --text-secondary: #8892a4;
+  --text-muted:     #4a5568;
+  --text-hint:      #3a4458;
+
+  --accent:         #10b981;
+  --accent-hover:   #059669;
+  --accent-subtle:  rgba(16,185,129,0.12);
+  --accent-border:  rgba(16,185,129,0.3);
+
+  --danger:         #f87171;
+  --danger-subtle:  rgba(248,113,113,0.1);
+  --warning:        #fbbf24;
+  --info:           #60a5fa;
+
+  --header-bg:      #0d1117;
+  --sidebar-bg:     #0d1117;
+  --chat-bg:        #0a0d14;
+  --msg-ai-bg:      rgba(255,255,255,0.04);
+  --msg-ai-border:  rgba(255,255,255,0.07);
+  --msg-user-bg:    rgba(16,185,129,0.12);
+  --msg-user-border:rgba(16,185,129,0.2);
+
+  --scrollbar-track: rgba(255,255,255,0.03);
+  --scrollbar-thumb: rgba(255,255,255,0.1);
+
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.4);
+  --shadow-md:  0 4px 20px rgba(0,0,0,0.5);
+  --shadow-lg:  0 10px 40px rgba(0,0,0,0.6);
+}
+
+/* ── LIGHT THEME ── */
+[data-theme="light"] {
+  --bg-base:        #f7f8fa;
+  --bg-surface:     #ffffff;
+  --bg-elevated:    #ffffff;
+  --bg-card:        #f9fafb;
+  --bg-input:       #ffffff;
+
+  --border-subtle:  #f0f0f0;
+  --border-default: #e5e7eb;
+  --border-strong:  #d1d5db;
+
+  --text-primary:   #111827;
+  --text-secondary: #374151;
+  --text-muted:     #6b7280;
+  --text-hint:      #9ca3af;
+
+  --accent:         #10a37f;
+  --accent-hover:   #0e8e6e;
+  --accent-subtle:  rgba(16,163,127,0.08);
+  --accent-border:  rgba(16,163,127,0.25);
+
+  --danger:         #dc2626;
+  --danger-subtle:  #fee2e2;
+  --warning:        #d97706;
+  --info:           #2563eb;
+
+  --header-bg:      #ffffff;
+  --sidebar-bg:     #ffffff;
+  --chat-bg:        #f7f8fa;
+  --msg-ai-bg:      #ffffff;
+  --msg-ai-border:  #e5e7eb;
+  --msg-user-bg:    rgba(16,163,127,0.07);
+  --msg-user-border:rgba(16,163,127,0.2);
+
+  --scrollbar-track: #f1f1f1;
+  --scrollbar-thumb: #d1d5db;
+
+  --shadow-sm:  0 1px 4px rgba(0,0,0,0.06);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg:  0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BASE RESET
+   ═══════════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Global scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+/* Global link */
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Theme toggle button — reusable anywhere */
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+  background: var(--accent-subtle);
+}

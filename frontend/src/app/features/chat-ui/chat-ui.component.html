@@ -1,28 +1,24 @@
-<!-- src/app/features/chat-ui/chat-ui.component.html -->
-<!-- REPLACE your existing chat-ui.component.html with this -->
-
 <div class="chat-app" [class.offline]="!isOnline">
-  <!-- ── Toast Notification ──────────────────────────────────── -->
-  <div
-    class="toast"
+
+  <!-- ── Toast ── -->
+  <div class="toast"
     [class.toast--visible]="toastVisible"
     [class.toast--error]="toastType === 'error'"
     [class.toast--warning]="toastType === 'warning'"
-    [class.toast--info]="toastType === 'info'"
-  >
+    [class.toast--info]="toastType === 'info'">
     <span class="toast-icon">
-      {{ toastType === "warning" ? "📶" : toastType === "error" ? "⚠️" : "ℹ️" }}
+      {{ toastType === 'warning' ? '📶' : toastType === 'error' ? '⚠️' : 'ℹ️' }}
     </span>
     <span class="toast-text">{{ toastMessage }}</span>
     <button class="toast-close" (click)="hideToast()">✕</button>
   </div>
 
-  <!-- ── Offline Banner ─────────────────────────────────────── -->
+  <!-- ── Offline Banner ── -->
   <div class="offline-banner" *ngIf="!isOnline">
-    <span>📵 You are offline. Check your internet connection.</span>
+    📵 You are offline. Check your internet connection.
   </div>
 
-  <!-- ── Header ─────────────────────────────────────────────── -->
+  <!-- ── Header ── -->
   <div class="chat-header">
     <div class="header-content">
       <div class="ai-avatar">AI</div>
@@ -31,28 +27,46 @@
         <p>Powered by Raman</p>
       </div>
     </div>
+
     <div class="header-actions">
-      <button
-        class="history-btn"
-        (click)="showHistory = !showHistory"
-        title="Chat History"
-      >
-        <span class="history-icon">🕐</span>
-        <span>History</span>
-        <span class="history-count" *ngIf="historyItems.length > 0">{{
-          historyItems.length
-        }}</span>
+      <!-- Theme toggle -->
+      <button class="theme-toggle" type="button"
+        (click)="toggleTheme()"
+        [title]="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
+        <svg *ngIf="isDark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg *ngIf="!isDark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
       </button>
+
+      <button class="history-btn" (click)="showHistory = !showHistory" title="Chat History">
+        <svg class="history-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>History</span>
+        <span class="history-count" *ngIf="historyItems.length > 0">{{ historyItems.length }}</span>
+      </button>
+
       <button class="logout-btn" type="button" (click)="logout()">
-        <span class="logout-icon">↗</span>
+        <svg class="logout-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
         <span>Logout</span>
       </button>
     </div>
   </div>
 
-  <!-- ── Main Layout ────────────────────────────────────────── -->
+  <!-- ── Main Layout ── -->
   <div class="chat-layout">
-    <!-- ── History Sidebar ──────────────────────────────────── -->
+
+    <!-- ── History Sidebar ── -->
     <div class="history-sidebar" [class.history-sidebar--open]="showHistory">
       <div class="history-header">
         <h3>Chat History</h3>
@@ -64,62 +78,41 @@
         <span>Loading history...</span>
       </div>
 
-      <div
-        class="history-empty"
-        *ngIf="!isLoadingHistory && historyItems.length === 0"
-      >
+      <div class="history-empty" *ngIf="!isLoadingHistory && historyItems.length === 0">
         <span>🗂️</span>
         <p>No history yet. Start chatting!</p>
       </div>
 
-      <div
-        class="history-list"
-        *ngIf="!isLoadingHistory && historyItems.length > 0"
-      >
-        <div
-          class="history-item"
+      <div class="history-list" *ngIf="!isLoadingHistory && historyItems.length > 0">
+        <div class="history-item"
           *ngFor="let item of historyItems"
-          (click)="loadHistoryChat(item)"
-        >
+          (click)="loadHistoryChat(item)">
           <div class="history-item-question">
-            {{ item.question | slice: 0 : 60
-            }}{{ item.question.length > 60 ? "..." : "" }}
+            {{ item.question | slice:0:60 }}{{ item.question.length > 60 ? '...' : '' }}
           </div>
           <div class="history-item-meta">
             <span class="history-date">{{ formatDate(item.createdAt) }}</span>
-            <button
-              class="history-delete"
+            <button class="history-delete"
               (click)="deleteHistoryItem(item.id, $event)"
               [class.deleting]="isDeletingId === item.id"
-              title="Delete"
-            >
-              {{ isDeletingId === item.id ? "..." : "🗑" }}
+              title="Delete">
+              {{ isDeletingId === item.id ? '...' : '🗑' }}
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ── Sidebar Overlay (mobile) ─────────────────────────── -->
-    <div
-      class="sidebar-overlay"
-      *ngIf="showHistory"
-      (click)="showHistory = false"
-    ></div>
+    <!-- Overlay -->
+    <div class="sidebar-overlay" *ngIf="showHistory" (click)="showHistory = false"></div>
 
-    <!-- ── Chat Area ─────────────────────────────────────────── -->
+    <!-- ── Chat Area ── -->
     <div class="chat-main">
       <div class="chat-messages" #chatMessagesContainer>
-        <app-chat-message
-          *ngFor="let message of messages"
-          [message]="message"
-        ></app-chat-message>
+        <app-chat-message *ngFor="let message of messages" [message]="message"></app-chat-message>
       </div>
-
-      <app-chat-input
-        [isLoading]="isLoading"
-        (send)="sendMessage($event)"
-      ></app-chat-input>
+      <app-chat-input [isLoading]="isLoading" (send)="sendMessage($event)"></app-chat-input>
     </div>
+
   </div>
 </div>
