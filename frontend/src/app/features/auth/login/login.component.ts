@@ -39,7 +39,7 @@ export class LoginComponent {
     };
 
     if (!request.email || !request.password) {
-      this.errorMessage = 'Please enter email and password';
+      this.errorMessage = 'Please enter your email and password.';
       return;
     }
 
@@ -60,7 +60,7 @@ export class LoginComponent {
       error: (error) => {
         this.isLoading = false;
         this.errorMessage =
-          error?.error?.message || error?.error || 'Login failed';
+          error?.error?.message || error?.error || 'Login failed. Please try again.';
       },
     });
   }

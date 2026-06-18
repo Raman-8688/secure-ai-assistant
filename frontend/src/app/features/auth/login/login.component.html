@@ -1,66 +1,281 @@
-<div class="auth-page">
-  <div class="auth-card">
-    <div class="brand">
-      <div class="logo">AI</div>
-      <h1>Welcome Back</h1>
-      <p>Login to continue to Mini AI Assistant</p>
-    </div>
+<div class="login-root">
 
-    <form (ngSubmit)="login()">
-      <label>Email</label>
-      <input
-        type="email"
-        [(ngModel)]="email"
-        name="email"
-        placeholder="Enter your email"
-      />
+  <!-- ═══════════════════ LEFT PANEL — App Dashboard ═══════════════════ -->
+  <div class="left-panel">
 
-      <label>Password</label>
-      <input
-        type="password"
-        [(ngModel)]="password"
-        name="password"
-        placeholder="Enter your password"
-      />
-
-      <button type="submit" [disabled]="isLoading">
-        {{ isLoading ? "Logging in..." : "Login" }}
-      </button>
-    </form>
-
-    <div class="divider">
-      <span>or continue with</span>
-    </div>
-
-    <div class="oauth-buttons">
-      <button class="btn-oauth btn-google" (click)="loginWithGoogle()" type="button">
-        <svg class="oauth-icon" viewBox="0 0 24 24">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+    <!-- Top brand bar -->
+    <div class="brand-bar">
+      <div class="brand-logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Google
-      </button>
-
-      <button class="btn-oauth btn-github" (click)="loginWithGitHub()" type="button">
-        <svg class="oauth-icon" viewBox="0 0 24 24">
-          <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.68-.21.68-.48 0-.24-.01-.88-.01-1.72-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.11-1.46-1.11-1.46-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48C19.13 20.17 22 16.42 22 12c0-5.52-4.48-10-10-10z" fill="#24292e"/>
-        </svg>
-        GitHub
-      </button>
+      </div>
+      <span class="brand-name">SecureAI Assistant</span>
+      <span class="brand-badge">v1.0</span>
     </div>
 
-    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <!-- Hero headline -->
+    <div class="hero-block">
+      <p class="hero-eyebrow">Built with Java Spring Boot · Angular · PostgreSQL</p>
+      <h1 class="hero-title">Enterprise-grade<br>AI Chat Platform</h1>
+      <p class="hero-sub">
+        A production-ready secure AI assistant with OAuth2, JWT auth,
+        real-time chat, and full conversation history — engineered by
+        <a href="https://raman-8688.github.io/portfolio-projects/" target="_blank" class="hero-link">Raman</a>.
+      </p>
+    </div>
 
-    <p class="switch">
-      Don't have an account?
-      <a routerLink="/register">Create account</a>
-    </p>
+    <!-- Stat strip -->
+    <div class="stat-strip">
+      <div class="stat-item">
+        <span class="stat-num">6+</span>
+        <span class="stat-label">Auth providers</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">JWT</span>
+        <span class="stat-label">Token security</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">REST</span>
+        <span class="stat-label">API architecture</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">Live</span>
+        <span class="stat-label">Deployed on Vercel</span>
+      </div>
+    </div>
 
-    <p class="switch">
-      Need OTP verification?
-      <a routerLink="/verify-email">Verify Email</a>
-    </p>
-  </div>
+    <!-- Feature cards grid -->
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon feat-icon--teal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <div class="feat-body">
+          <h3 class="feat-title">OAuth2 + JWT Auth</h3>
+          <p class="feat-desc">Google &amp; GitHub OAuth2 login with secure JWT token management and Spring Security integration.</p>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon feat-icon--purple">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="feat-body">
+          <h3 class="feat-title">AI Chat with History</h3>
+          <p class="feat-desc">Real-time AI conversations stored per-user via JPA entities with full session history sidebar.</p>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon feat-icon--blue">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+          </svg>
+        </div>
+        <div class="feat-body">
+          <h3 class="feat-title">PostgreSQL on Neon</h3>
+          <p class="feat-desc">Cloud-native PostgreSQL via Neon with JPA/Hibernate ORM, proper entity relationships and migrations.</p>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon feat-icon--amber">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="feat-body">
+          <h3 class="feat-title">Error Handling &amp; Offline</h3>
+          <p class="feat-desc">Global exception handler, Angular error interceptor, NetworkService for offline detection.</p>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon feat-icon--coral">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <div class="feat-body">
+          <h3 class="feat-title">Angular SPA Frontend</h3>
+          <p class="feat-desc">Standalone components, route guards, auth interceptors, markdown rendering and reactive forms.</p>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon feat-icon--green">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          </svg>
+        </div>
+        <div class="feat-body">
+          <h3 class="feat-title">Deployed on Render + Vercel</h3>
+          <p class="feat-desc">Spring Boot backend on Render with multi-stage Dockerfile. Angular frontend on Vercel with CI/CD.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech stack pills -->
+    <div class="stack-row">
+      <span class="stack-label">Tech stack</span>
+      <div class="stack-pills">
+        <span class="pill pill--java">Java 17</span>
+        <span class="pill pill--spring">Spring Boot</span>
+        <span class="pill pill--angular">Angular 17</span>
+        <span class="pill pill--pg">PostgreSQL</span>
+        <span class="pill pill--docker">Docker</span>
+        <span class="pill pill--jwt">JWT</span>
+      </div>
+    </div>
+
+    <!-- Developer credit strip -->
+    <div class="dev-strip">
+      <div class="dev-avatar">R</div>
+      <div class="dev-info">
+        <span class="dev-name">Raman</span>
+        <span class="dev-role">Java Full Stack Developer · Hyderabad</span>
+      </div>
+      <div class="dev-links">
+        <a href="https://github.com/Raman-8688" target="_blank" class="dev-link" aria-label="GitHub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.68-.21.68-.48 0-.24-.01-.88-.01-1.72-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.11-1.46-1.11-1.46-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48C19.13 20.17 22 16.42 22 12c0-5.52-4.48-10-10-10z"/>
+          </svg>
+        </a>
+        <a href="https://raman-8688.github.io/portfolio-projects/" target="_blank" class="dev-link" aria-label="Portfolio">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /left-panel -->
+
+  <!-- ═══════════════════ RIGHT PANEL — Login Form ═══════════════════ -->
+  <div class="right-panel">
+    <div class="form-wrapper">
+
+      <!-- Form header -->
+      <div class="form-header">
+        <div class="form-logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="form-title">Sign in</h2>
+          <p class="form-subtitle">to SecureAI Assistant</p>
+        </div>
+      </div>
+
+      <!-- OAuth buttons — primary CTAs -->
+      <div class="oauth-group">
+        <button class="btn-oauth btn-google" (click)="loginWithGoogle()" type="button">
+          <svg class="oauth-icon" viewBox="0 0 24 24">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <button class="btn-oauth btn-github" (click)="loginWithGitHub()" type="button">
+          <svg class="oauth-icon" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.68-.21.68-.48 0-.24-.01-.88-.01-1.72-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.11-1.46-1.11-1.46-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48C19.13 20.17 22 16.42 22 12c0-5.52-4.48-10-10-10z" fill="currentColor"/>
+          </svg>
+          Continue with GitHub
+        </button>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span>or sign in with email</span>
+      </div>
+
+      <!-- Email/password form -->
+      <form (ngSubmit)="login()" class="email-form">
+        <div class="field-group">
+          <label class="field-label" for="email">Email address</label>
+          <div class="field-input-wrap">
+            <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <input
+              id="email"
+              type="email"
+              [(ngModel)]="email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              class="field-input"
+            />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="password">Password</label>
+          <div class="field-input-wrap">
+            <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <input
+              id="password"
+              type="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              class="field-input"
+            />
+          </div>
+        </div>
+
+        <p class="error-msg" *ngIf="errorMessage">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          {{ errorMessage }}
+        </p>
+
+        <button type="submit" class="btn-submit" [disabled]="isLoading">
+          <span *ngIf="!isLoading">Sign in</span>
+          <span *ngIf="isLoading" class="loading-row">
+            <span class="spinner"></span>
+            Signing in...
+          </span>
+        </button>
+      </form>
+
+      <!-- Footer links -->
+      <div class="form-footer">
+        <p class="footer-link-row">
+          No account?
+          <a routerLink="/register" class="text-link">Create one</a>
+        </p>
+        <p class="footer-link-row">
+          Need OTP verification?
+          <a routerLink="/verify-email" class="text-link">Verify email</a>
+        </p>
+      </div>
+
+      <!-- Security note -->
+      <div class="security-note">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Secured with JWT · OAuth2 · Spring Security
+      </div>
+
+    </div>
+  </div><!-- /right-panel -->
+
 </div>
