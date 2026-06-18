@@ -1,7 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AuthService } from '../../../core/services/auth.service';
 import { LoginRequest } from '../../../core/models/auth.model';
@@ -11,7 +20,19 @@ import { ThemeService } from '../../../core/services/theme.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
@@ -20,42 +41,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   password = '';
   isLoading = false;
   errorMessage = '';
+  hidePassword = true;
 
-  // ── Animated lines ─────────────────────────────────────────
-  // All lines that will cycle through
-  private readonly ALL_LINES = [
-    'Built with Java 17 and Spring Boot 3 — production-ready backend.',
-    'OAuth2 login via Google and GitHub with Spring Security.',
-    'JWT tokens issued and validated on every secure request.',
-    'Angular 17 standalone components with lazy-loaded routes.',
-    'PostgreSQL on Neon — cloud-native relational database.',
-    'JPA / Hibernate ORM with proper entity relationships.',
-    'Full chat history persisted per user via ChatHistory entity.',
-    'Real-time AI responses powered by the Hugging Face API.',
-    'Global exception handler for clean, structured error responses.',
-    'Angular error interceptor with user-friendly toast messages.',
-    'NetworkService detects offline state before every API call.',
-    'Multi-stage Dockerfile — backend deployed on Render.',
-    'Angular frontend deployed on Vercel with CI/CD pipeline.',
-    'Route guards protect /chat from unauthenticated access.',
-    'Auth interceptor injects JWT Bearer token automatically.',
-    'Markdown renderer in chat — code blocks, lists, bold text.',
-    'Environment-based config for local and production builds.',
-    'Reactive forms with real-time validation and error display.',
-    'Responsive layout — works on desktop, tablet, and mobile.',
-    'Entire project engineered solo by Raman — Hyderabad.',
+  // ── Animated Text Lines (Using Material Icons) ──────────
+  animatedLines: string[] = [
+    'smart_toy Real-time AI Responses with Hugging Face',
+    'mic Voice Input & Chat History',
+    'security Secure JWT Authentication',
+    'public OAuth2 Login — Google & GitHub',
+    'bolt Built with Angular & Spring Boot',
+    'devices Fully Responsive Design',
+    'storage PostgreSQL on Neon Cloud Database',
+    'verified Enterprise-grade Security'
   ];
 
-  private readonly MAX_VISIBLE = 7;   // lines shown at once
-  private readonly INTERVAL_MS = 1800; // new line every 1.8s
+  currentLineIndex = 0;
+  previousLineIndex = -1;
+  private intervalId: any;
 
-  visibleLines: string[] = [];
-  fadingLines = new Set<number>();
-
-  private lineIndex = 0;
-  private timer: any;
-
-  // ── Theme ──────────────────────────────────────────────────
   get isDark(): boolean {
     return this.themeService.isDark;
   }
@@ -71,38 +74,25 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Seed first N lines instantly
-    this.visibleLines = this.ALL_LINES.slice(0, this.MAX_VISIBLE);
-    this.lineIndex = this.MAX_VISIBLE % this.ALL_LINES.length;
     this.startAnimation();
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.timer);
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   private startAnimation(): void {
-    this.timer = setInterval(() => {
-      // Mark oldest line as fading
-      this.fadingLines.add(0);
-
-      setTimeout(() => {
-        // Remove the oldest line
-        this.visibleLines.shift();
-        this.fadingLines.clear();
-
-        // Append next line
-        this.visibleLines.push(this.ALL_LINES[this.lineIndex]);
-        this.lineIndex = (this.lineIndex + 1) % this.ALL_LINES.length;
-      }, 380); // matches CSS fade duration
-
-    }, this.INTERVAL_MS);
+    this.intervalId = setInterval(() => {
+      this.previousLineIndex = this.currentLineIndex;
+      this.currentLineIndex = (this.currentLineIndex + 1) % this.animatedLines.length;
+    }, 2200);
   }
 
-  // ── Auth ───────────────────────────────────────────────────
+  // ── Auth Methods ──────────────────────────────────────────
   login(): void {
     this.errorMessage = '';
-
     const request: LoginRequest = {
       email: this.email.trim(),
       password: this.password,
@@ -114,7 +104,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.isLoading = true;
-
     this.authService.login(request).subscribe({
       next: (response) => {
         this.isLoading = false;
@@ -127,8 +116,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.isLoading = false;
-        this.errorMessage =
-          error?.error?.message || error?.error || 'Login failed. Please try again.';
+        this.errorMessage = error?.error?.message || 'Login failed. Please try again.';
       },
     });
   }

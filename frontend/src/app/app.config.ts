@@ -1,9 +1,10 @@
 // src/app/app.config.ts
-// REPLACE your existing app.config.ts with this
-
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
@@ -13,9 +14,17 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(
       withInterceptors([
-        authInterceptor,   // Adds JWT token to every request
-        errorInterceptor   // Converts all HTTP errors to user-friendly messages
+        authInterceptor,
+        errorInterceptor
       ])
-    )
+    ),
+    provideAnimations(),
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { 
+        appearance: 'outline',
+        floatLabel: 'auto'
+      }
+    }
   ]
 };

@@ -144,3 +144,103 @@ a:hover { text-decoration: underline; }
   color: var(--accent);
   background: var(--accent-subtle);
 }
+
+
+
+
+/* src/styles.css */
+
+/* Import Material Theme */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Global Variables for Theme */
+:root {
+  --bg-base: #f5f7fa;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --text-primary: #1a1a2e;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --text-hint: #9ca3af;
+  --border-default: rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.04);
+  --accent: #10b981;
+  --accent-subtle: rgba(16, 185, 129, 0.08);
+  --accent-border: rgba(16, 185, 129, 0.2);
+  --danger: #ef4444;
+  --danger-subtle: rgba(239, 68, 68, 0.06);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.dark-theme {
+  --bg-base: #0f1117;
+  --bg-surface: #161b22;
+  --bg-elevated: #0d1117;
+  --bg-card: #161b22;
+  --bg-input: #0d1117;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6b7280;
+  --text-hint: #4b5563;
+  --border-default: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.03);
+  --accent: #34d399;
+  --accent-subtle: rgba(52, 211, 153, 0.1);
+  --accent-border: rgba(52, 211, 153, 0.2);
+  --danger: #f87171;
+  --danger-subtle: rgba(248, 113, 113, 0.06);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Global Reset & Typography */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Material Overrides for Dark Theme */
+.dark-theme .mat-mdc-card {
+  background: var(--bg-card) !important;
+}
+
+.dark-theme .mat-mdc-form-field {
+  color: var(--text-primary) !important;
+}
+
+.dark-theme .mdc-text-field {
+  background: var(--bg-input) !important;
+}
+
+.dark-theme .mat-mdc-form-field-label {
+  color: var(--text-secondary) !important;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 20px;
+  opacity: 0.3;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  opacity: 0.6;
+}
