@@ -7,6 +7,8 @@ import { VerifyEmailComponent } from './features/auth/verify-email/verify-email.
 import { authGuard } from './core/guards/auth.guard';
 import { ChatUiComponent } from './features/chat-ui/chat-ui.component';
 import { CallbackComponent } from './features/auth/callback/callback.component';
+import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './features/auth/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +28,8 @@ export const routes: Routes = [
     path: 'verify-email',
     component: VerifyEmailComponent,
   },
+   { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   {
     path: 'auth/callback', // Add this route for OAuth2 callback
     component: CallbackComponent,

@@ -51,3 +51,28 @@ export interface AuthResponse {
   token: string | null;
   message: string;
 }
+
+
+
+
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ResetPasswordRequest {
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export interface ResetPasswordResponse {
+  message: string;
+  success: boolean;
+  status: 'success' | 'email_not_found' | 'too_many_attempts' | 'error';
+}
+
+export interface ValidateTokenResponse {
+  message: string;
+  success: boolean;
+  status: string;
+}
