@@ -7,6 +7,10 @@ import {
   LoginRequest,
   AuthResponse,
   ResendOtpRequest,
+  ForgotPasswordRequest,
+  ResetPasswordRequest,
+  ResetPasswordResponse,
+  ValidateTokenResponse,
 } from '../models/auth.model';
 import { environment } from '../../../environments/environment';
 
@@ -102,5 +106,25 @@ export class AuthService {
    */
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+  }
+
+
+
+
+
+
+
+ // src/app/core/services/auth.service.ts
+
+forgotPassword(request: ForgotPasswordRequest): Observable<ResetPasswordResponse> {
+    return this.http.post<ResetPasswordResponse>(`${this.authApiUrl}/forgot-password`, request);
+}
+
+  resetPassword(request: ResetPasswordRequest): Observable<ResetPasswordResponse> {
+    return this.http.post<ResetPasswordResponse>(`${this.authApiUrl}/reset-password`, request);
+  }
+
+  validateResetToken(token: string): Observable<ValidateTokenResponse> {
+    return this.http.get<ValidateTokenResponse>(`${this.authApiUrl}/validate-reset-token?token=${token}`);
   }
 }
