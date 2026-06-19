@@ -4,6 +4,7 @@ import com.example.aiapp.aiapi.dto.ChatHistoryResponse;
 import com.example.aiapp.aiapi.entity.ChatHistory;
 import com.example.aiapp.aiapi.repository.ChatHistoryRepository;
 import com.example.aiapp.aiapi.service.AIService;
+import com.example.aiapp.aiapi.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,9 @@ public class AIController {
 
     @Autowired
     private ChatHistoryRepository chatHistoryRepository;
+
+    @Autowired
+    private AuthService authService;
 
     @PostMapping("/ask")
     public ResponseEntity<?> askQuestion(
@@ -90,4 +94,8 @@ public class AIController {
                     .body(Map.of("error", "Could not delete item."));
         }
     }
+
+
+
+
 }

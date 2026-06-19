@@ -1,6 +1,8 @@
 package com.example.aiapp.aiapi.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 /*
@@ -19,6 +21,7 @@ import java.time.LocalDateTime;
  * - OAuth2 provider info (for Google/GitHub login)
  */
 @Entity
+@Data
 @Table(name = "users")
 public class User {
 
@@ -99,6 +102,22 @@ public class User {
      */
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
+
+
+    @Column(name = "reset_token")
+    private String resetToken;
+
+    @Column(name = "reset_token_expiry")
+    private LocalDateTime resetTokenExpiry;
+
+    @Column(name = "last_password_reset")
+    private LocalDateTime lastPasswordReset;
+
+    @Column(name = "password_reset_attempts")
+    private Integer passwordResetAttempts = 0;
+
+    @Column(name = "reset_token_generated_at")
+    private LocalDateTime resetTokenGeneratedAt;
 
     /*
      * Automatically set createdAt before saving user first time.

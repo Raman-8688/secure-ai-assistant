@@ -99,4 +99,54 @@ public class AuthController {
 
         return ResponseEntity.ok(user);
     }
+
+
+
+    // controller/AuthController.java
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<ResetPasswordResponse> forgotPassword(
+            @Valid @RequestBody ForgotPasswordRequest request) {
+
+        ResetPasswordResponse response = authService.forgotPassword(request);
+
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        } else {
+            // Check different error types
+            if ("email_not_found".equals(response.getStatus())) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            } else if ("too_many_attempts".equals(response.getStatus())) {
+                return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(response);
+            } else {
+                return ResponseEntity.badRequest().body(response);
+            }
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<ResetPasswordResponse> resetPassword(
+            @Valid @RequestBody ResetPasswordRequest request) {
+
+        ResetPasswordResponse response = authService.resetPassword(request);
+
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @GetMapping("/validate-reset-token")
+    public ResponseEntity<ResetPasswordResponse> validateResetToken(
+            @RequestParam String token) {
+
+        ResetPasswordResponse response = authService.validateResetToken(token);
+
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
 }
