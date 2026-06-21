@@ -40,7 +40,9 @@ public class AuthService {
 
     @Transactional
     public String register(RegisterRequest request) {
+        log.info("REGISTER START");
         String emailLower = request.getEmail().toLowerCase().trim();
+        log.info("emilLower:"+emailLower);
 
         // Check if email already exists
         if (userRepository.existsByEmail(emailLower)) {
@@ -61,19 +63,40 @@ public class AuthService {
         user.setCreatedAt(LocalDateTime.now());
 
         userRepository.save(user);
+        log.info("USER SAVED");
+
+        log.info("OTP GENERATED: {}", otp);
+
+        log.info("CALLING sendOtpEmailAsync");
 
         sendOtpEmailAsync(user.getEmail(), otp);
+
+        log.info("sendOtpEmailAsync CALL COMPLETED");
 
         return "Registration successful. Please check your email for OTP verification.";
     }
 
     @Async
     public void sendOtpEmailAsync(String email, String otp) {
+
+        log.info("========== ASYNC METHOD START ==========");
+        log.info("Email: {}", email);
+
         try {
+
+            log.info("Calling EmailService");
+
             emailService.sendOtpEmail(email, otp);
+
+            log.info("EmailService completed successfully");
+
         } catch (Exception e) {
-            log.error("Failed to send OTP email to {}", email);
+
+            log.error("ASYNC ERROR", e);
+
         }
+
+        log.info("========== ASYNC METHOD END ==========");
     }
 
     // ==================== EMAIL VERIFICATION ====================

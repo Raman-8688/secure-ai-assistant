@@ -68,6 +68,8 @@ public class EmailService {
             log.info("=========================================");
             log.info("EMAIL FAILED - Use this OTP for testing: {}", otp);
             log.info("=========================================");
+
+            log.error("FULL EMAIL ERROR", e);
         }
     }
 
