@@ -1,61 +1,58 @@
+// service/AuthService.java - Updated response messages
 package com.example.aiapp.aiapi.service;
 
-import com.example.aiapp.aiapi.dto.*;
+import com.example.aiapp.aiapi.dto.requests.*;
+import com.example.aiapp.aiapi.dto.response.AuthResponse;
 import com.example.aiapp.aiapi.entity.User;
 import com.example.aiapp.aiapi.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
+@EnableAsync
 public class AuthService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
+    private final EmailService emailService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JwtService jwtService;
+    @Value("${app.reset.token.expiry.minutes:15}")
+    private int resetTokenExpiryMinutes;
 
-    @Autowired
-    private EmailService emailService;
+    @Value("${app.max.reset.attempts:5}")
+    private int maxResetAttempts;
 
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    // ==================== REGISTRATION ====================
 
+    @Transactional
     public String register(RegisterRequest request) {
-        log.info("=== REGISTRATION START ===");
-        log.info("Email: {}", request.getEmail());
-
-        // Validate input
-        if (request.getEmail() == null || request.getEmail().isBlank()) {
-            return "Email is required";
-        }
-        if (request.getPassword() == null || request.getPassword().length() < 6) {
-            return "Password must be at least 6 characters";
-        }
-
-        // Check existing user - CASE INSENSITIVE
         String emailLower = request.getEmail().toLowerCase().trim();
+
+        // Check if email already exists
         if (userRepository.existsByEmail(emailLower)) {
-            log.warn("Email already exists: {}", emailLower);
-            return "Email already registered";
+            log.warn("Registration attempt with existing email: {}", emailLower);
+            return "Email already registered. Please login or use a different email.";
         }
 
-        // Create new user
         User user = new User();
         user.setName(request.getName());
-        user.setEmail(emailLower); // Store email in lowercase
+        user.setEmail(emailLower);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        // ENCODE THE PASSWORD
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
-        user.setPassword(encodedPassword);
-        log.info("Password encoded for: {}", emailLower);
-
-        // Generate OTP
         String otp = String.format("%06d", new Random().nextInt(999999));
         user.setVerificationOtp(otp);
         user.setOtpExpiryTime(LocalDateTime.now().plusMinutes(10));
@@ -63,129 +60,216 @@ public class AuthService {
         user.setRole("USER");
         user.setCreatedAt(LocalDateTime.now());
 
-        // Save to database
         userRepository.save(user);
-        log.info("User saved with ID: {}", user.getId());
 
-        // SEND OTP EMAIL ONLY - NOT IN RESPONSE
-        try {
-            emailService.sendOtpEmail(user.getEmail(), otp);
-            log.info("OTP email sent to: {}", request.getEmail());
-        } catch (Exception e) {
-            log.error("Failed to send email: {}", e.getMessage());
-        }
+        sendOtpEmailAsync(user.getEmail(), otp);
 
-        log.info("=== REGISTRATION COMPLETE ===");
-        // IMPORTANT: Don't return OTP in response
         return "Registration successful. Please check your email for OTP verification.";
     }
 
-    public String verifyEmail(VerifyEmailRequest request) {
-        log.info("=== VERIFY EMAIL START ===");
-        log.info("Email: {}", request.getEmail());
-
-        String emailLower = request.getEmail().toLowerCase().trim();
-        User user = userRepository.findByEmail(emailLower).orElse(null);
-
-        if (user == null) {
-            log.warn("User not found: {}", emailLower);
-            return "User not found";
+    @Async
+    public void sendOtpEmailAsync(String email, String otp) {
+        try {
+            emailService.sendOtpEmail(email, otp);
+        } catch (Exception e) {
+            log.error("Failed to send OTP email to {}", email);
         }
+    }
+
+    // ==================== EMAIL VERIFICATION ====================
+
+    @Transactional
+    public String verifyEmail(VerifyEmailRequest request) {
+        String emailLower = request.getEmail().toLowerCase().trim();
+        Optional<User> userOpt = userRepository.findByEmail(emailLower);
+
+        if (userOpt.isEmpty()) {
+            return "User not found. Please register first.";
+        }
+
+        User user = userOpt.get();
 
         if (user.isEmailVerified()) {
-            log.info("Email already verified: {}", emailLower);
-            return "Email already verified";
+            return "Email already verified. You can now login.";
         }
 
-        // Validate OTP properly
         if (user.getVerificationOtp() == null) {
-            log.error("No OTP found for user: {}", emailLower);
             return "No OTP found. Please request a new OTP.";
         }
 
         if (!user.getVerificationOtp().equals(request.getOtp())) {
-            log.warn("OTP mismatch for: {}", emailLower);
             return "Invalid OTP. Please check and try again.";
         }
 
-        // Check expiry
         if (LocalDateTime.now().isAfter(user.getOtpExpiryTime())) {
-            log.warn("OTP expired for: {}", emailLower);
             return "OTP has expired. Please request a new OTP.";
         }
 
-        // Mark as verified
         user.setEmailVerified(true);
         user.setVerificationOtp(null);
         user.setOtpExpiryTime(null);
         userRepository.save(user);
 
-        log.info("Email verified successfully: {}", emailLower);
-        log.info("=== VERIFY EMAIL COMPLETE ===");
         return "Email verified successfully. You can now login.";
     }
 
-    public AuthResponse login(LoginRequest request) {
-        log.info("=== LOGIN START ===");
-        log.info("Email: {}", request.getEmail());
+    // ==================== RESEND OTP ====================
 
-        String emailLower = request.getEmail().toLowerCase().trim();
-        User user = userRepository.findByEmail(emailLower).orElse(null);
-
-        if (user == null) {
-            log.warn("User not found: {}", emailLower);
-            return new AuthResponse(null, "Invalid email or password");
-        }
-
-        // Check password
-        boolean passwordMatches = passwordEncoder.matches(request.getPassword(), user.getPassword());
-
-        if (!passwordMatches) {
-            log.warn("Invalid password for: {}", emailLower);
-            return new AuthResponse(null, "Invalid email or password");
-        }
-
-        if (!user.isEmailVerified()) {
-            log.warn("Email not verified: {}", emailLower);
-            return new AuthResponse(null, "Please verify your email first. Check your inbox for OTP.");
-        }
-
-        // Generate token
-        String token = jwtService.generateToken(user.getEmail());
-        log.info("Login successful for: {}", emailLower);
-        log.info("=== LOGIN COMPLETE ===");
-
-        return new AuthResponse(token, "Login successful");
-    }
-
+    @Transactional
     public String resendOtp(ResendOtpRequest request) {
-        log.info("=== RESEND OTP START ===");
-        log.info("Email: {}", request.getEmail());
-
         String emailLower = request.getEmail().toLowerCase().trim();
-        User user = userRepository.findByEmail(emailLower).orElse(null);
+        Optional<User> userOpt = userRepository.findByEmail(emailLower);
 
-        if (user == null) {
-            log.warn("User not found: {}", emailLower);
-            return "User not found";
+        if (userOpt.isEmpty()) {
+            return "User not found. Please register first.";
         }
+
+        User user = userOpt.get();
 
         if (user.isEmailVerified()) {
-            log.info("Email already verified: {}", emailLower);
             return "Email already verified. Please login.";
         }
 
-        // Generate new OTP
         String newOtp = String.format("%06d", new Random().nextInt(999999));
         user.setVerificationOtp(newOtp);
         user.setOtpExpiryTime(LocalDateTime.now().plusMinutes(10));
         userRepository.save(user);
 
-        // Send email only
-        emailService.sendOtpEmail(user.getEmail(), newOtp);
-        log.info("New OTP sent to: {}", request.getEmail());
-        log.info("=== RESEND OTP COMPLETE ===");
+        sendOtpEmailAsync(user.getEmail(), newOtp);
 
         return "OTP resent successfully. Please check your email.";
+    }
+
+    // ==================== LOGIN ====================
+
+    public AuthResponse login(LoginRequest request) {
+        String emailLower = request.getEmail().toLowerCase().trim();
+        Optional<User> userOpt = userRepository.findByEmail(emailLower);
+
+        if (userOpt.isEmpty()) {
+            return new AuthResponse(null, "Invalid email or password");
+        }
+
+        User user = userOpt.get();
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            return new AuthResponse(null, "Invalid email or password");
+        }
+
+        if (!user.isEmailVerified()) {
+            return new AuthResponse(null, "Please verify your email first. Check your inbox for OTP.");
+        }
+
+        userRepository.updateLastLogin(emailLower, LocalDateTime.now());
+
+        String token = jwtService.generateToken(user.getEmail());
+
+        return new AuthResponse(token, "Login successful");
+    }
+
+    // ==================== FORGOT PASSWORD ====================
+
+    @Transactional
+    public String forgotPassword(ForgotPasswordRequest request) {
+        String emailLower = request.getEmail().toLowerCase().trim();
+        Optional<User> userOpt = userRepository.findByEmail(emailLower);
+
+        if (userOpt.isEmpty()) {
+            log.warn("Password reset requested for non-existent email: {}", emailLower);
+            return "Email not registered. Please create an account first.";
+        }
+
+        User user = userOpt.get();
+
+        if (user.getPasswordResetAttempts() != null &&
+                user.getPasswordResetAttempts() >= maxResetAttempts) {
+            return "Too many reset attempts. Please try again after 24 hours.";
+        }
+
+        String resetToken = generateSecureToken();
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(resetTokenExpiryMinutes);
+
+        userRepository.updateResetToken(emailLower, resetToken, expiryTime, LocalDateTime.now());
+        userRepository.incrementResetAttempts(emailLower);
+
+        emailService.sendPasswordResetEmail(user.getEmail(), resetToken);
+
+        return "Password reset link sent to your email. Please check your inbox.";
+    }
+
+    // ==================== RESET PASSWORD ====================
+
+    @Transactional
+    public String resetPassword(ResetPasswordRequest request) {
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            return "Passwords do not match.";
+        }
+
+        if (!isValidPassword(request.getNewPassword())) {
+            return "Password must be at least 8 characters and contain uppercase, lowercase, number, and special character.";
+        }
+
+        Optional<User> userOpt = userRepository.findByResetToken(request.getToken());
+
+        if (userOpt.isEmpty()) {
+            return "Invalid or expired reset token.";
+        }
+
+        User user = userOpt.get();
+
+        if (LocalDateTime.now().isAfter(user.getResetTokenExpiry())) {
+            user.setResetToken(null);
+            user.setResetTokenExpiry(null);
+            userRepository.save(user);
+            return "Reset token has expired. Please request a new one.";
+        }
+
+        if (passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
+            return "New password must be different from your current password.";
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        user.setResetToken(null);
+        user.setResetTokenExpiry(null);
+        user.setLastPasswordReset(LocalDateTime.now());
+        user.setPasswordResetAttempts(0);
+        userRepository.save(user);
+
+        userRepository.resetResetAttempts(user.getId());
+
+        return "Password reset successful. You can now login with your new password.";
+    }
+
+    //VALIDATE TOKEN ====================
+
+    @Transactional
+    public String validateResetToken(String token) {
+        Optional<User> userOpt = userRepository.findByResetToken(token);
+
+        if (userOpt.isEmpty()) {
+            return "Invalid reset token.";
+        }
+
+        User user = userOpt.get();
+
+        if (LocalDateTime.now().isAfter(user.getResetTokenExpiry())) {
+            user.setResetToken(null);
+            user.setResetTokenExpiry(null);
+            userRepository.save(user);
+            return "Reset token has expired. Please request a new one.";
+        }
+
+        return "Token is valid.";
+    }
+
+    // PRIVATE METHODS
+
+    private String generateSecureToken() {
+        return UUID.randomUUID().toString() + "-" + System.currentTimeMillis() + "-" + UUID.randomUUID().toString().substring(0, 8);
+    }
+
+    private boolean isValidPassword(String password) {
+        String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
+        return password.matches(pattern);
     }
 }

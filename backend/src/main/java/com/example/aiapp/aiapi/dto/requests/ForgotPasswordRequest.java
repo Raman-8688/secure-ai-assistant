@@ -1,18 +1,13 @@
-package com.example.aiapp.aiapi.dto;
-
-
+// dto/requests/ForgotPasswordRequest.java
+package com.example.aiapp.aiapi.dto.requests;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-/*
- * Used when user clicks:
- * "Resend OTP"
- */
-public class ResendOtpRequest {
+public class ForgotPasswordRequest {
 
-    @Email
-    @NotBlank
+    @Email(message = "Invalid email format")
+    @NotBlank(message = "Email is required")
     private String email;
 
     public String getEmail() {

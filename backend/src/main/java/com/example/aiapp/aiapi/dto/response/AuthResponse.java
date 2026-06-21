@@ -1,4 +1,4 @@
-package com.example.aiapp.aiapi.dto;
+package com.example.aiapp.aiapi.dto.response;
 
 
 

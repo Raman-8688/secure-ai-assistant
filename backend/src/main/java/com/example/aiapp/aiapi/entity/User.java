@@ -1,114 +1,71 @@
+// entity/User.java
 package com.example.aiapp.aiapi.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-/*
- * User entity represents registered users in our AI Assistant app.
- *
- * This class will create a database table named "users".
- * Each row means one registered user.
- *
- * We store:
- * - name
- * - email
- * - encrypted password
- * - email verification status
- * - OTP for email verification
- * - role for future authorization
- * - OAuth2 provider info (for Google/GitHub login)
- */
 @Entity
 @Table(name = "users")
 public class User {
 
-    /*
-     * Primary key.
-     * AUTO means database will generate id automatically.
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*
-     * User full name.
-     */
     @Column(nullable = false)
     private String name;
 
-    /*
-     * Email should be unique because login will happen using email.
-     */
     @Column(nullable = false, unique = true)
     private String email;
 
-    /*
-     * Password will not be stored as plain text.
-     * We will store BCrypt encrypted password.
-     * For OAuth2 users, this can be null.
-     */
     private String password;
 
-    /*
-     * Normal user role.
-     * Later we can extend this to ADMIN, PREMIUM_USER, etc.
-     */
     @Column(nullable = false)
     private String role = "USER";
 
-    /*
-     * False means user registered but email not verified yet.
-     * True means user verified OTP successfully.
-     * OAuth2 users are automatically verified.
-     */
     @Column(nullable = false)
     private boolean emailVerified = false;
 
-    /*
-     * OTP code sent to user email.
-     * Only for email/password registration.
-     */
     private String verificationOtp;
 
-    /*
-     * OTP expiry time.
-     * After this time, OTP should not be accepted.
-     */
     private LocalDateTime otpExpiryTime;
 
-    /*
-     * Account creation time.
-     */
     private LocalDateTime createdAt;
 
-    /*
-     * OAuth2 Provider (google, github, etc.)
-     * Null for email/password users.
-     */
     private String provider;
 
-    /*
-     * OAuth2 Provider User ID (sub from Google, id from GitHub)
-     * Null for email/password users.
-     */
     @Column(name = "provider_id")
     private String providerId;
 
-    /*
-     * Last login timestamp
-     */
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
-    /*
-     * Automatically set createdAt before saving user first time.
-     */
+    // ========== FORGOT PASSWORD FIELDS ==========
+
+    @Column(name = "reset_token")
+    private String resetToken;
+
+    @Column(name = "reset_token_expiry")
+    private LocalDateTime resetTokenExpiry;
+
+    @Column(name = "last_password_reset")
+    private LocalDateTime lastPasswordReset;
+
+    @Column(name = "password_reset_attempts")
+    private Integer passwordResetAttempts = 0;
+
+    @Column(name = "reset_token_generated_at")
+    private LocalDateTime resetTokenGeneratedAt;
+
     @PrePersist
     public void beforeSave() {
         this.createdAt = LocalDateTime.now();
+        if (this.passwordResetAttempts == null) {
+            this.passwordResetAttempts = 0;
+        }
     }
 
-    // ========== Getters and Setters ==========
+    // ========== GETTERS AND SETTERS ==========
 
     public Long getId() {
         return id;
@@ -204,5 +161,45 @@ public class User {
 
     public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
+    public LocalDateTime getResetTokenExpiry() {
+        return resetTokenExpiry;
+    }
+
+    public void setResetTokenExpiry(LocalDateTime resetTokenExpiry) {
+        this.resetTokenExpiry = resetTokenExpiry;
+    }
+
+    public LocalDateTime getLastPasswordReset() {
+        return lastPasswordReset;
+    }
+
+    public void setLastPasswordReset(LocalDateTime lastPasswordReset) {
+        this.lastPasswordReset = lastPasswordReset;
+    }
+
+    public Integer getPasswordResetAttempts() {
+        return passwordResetAttempts;
+    }
+
+    public void setPasswordResetAttempts(Integer passwordResetAttempts) {
+        this.passwordResetAttempts = passwordResetAttempts;
+    }
+
+    public LocalDateTime getResetTokenGeneratedAt() {
+        return resetTokenGeneratedAt;
+    }
+
+    public void setResetTokenGeneratedAt(LocalDateTime resetTokenGeneratedAt) {
+        this.resetTokenGeneratedAt = resetTokenGeneratedAt;
     }
 }

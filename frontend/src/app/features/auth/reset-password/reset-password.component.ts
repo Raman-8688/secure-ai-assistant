@@ -1,15 +1,14 @@
-// src/app/components/auth/reset-password/reset-password.component.ts
+// src/app/features/auth/reset-password/reset-password.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthLayoutComponent } from '../../../shared/components/auth-layout/auth-layout.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/services/theme.service';
 
@@ -19,13 +18,12 @@ import { ThemeService } from '../../../core/services/theme.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
+    MatSnackBarModule,
     MatIconModule,
+    MatButtonModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatTooltipModule,
+    AuthLayoutComponent
   ],
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
@@ -39,6 +37,15 @@ export class ResetPasswordComponent implements OnInit {
   resetSuccess = false;
   hidePassword = true;
   hideConfirmPassword = true;
+  errorMessage = '';
+  successMessage = '';
+
+  animatedLines: string[] = [
+    'lock Create a new strong password',
+    'security Password must be secure',
+    'verified Confirm your new password',
+    'check_circle Password reset complete'
+  ];
 
   get isDark(): boolean {
     return this.themeService.isDark;
@@ -69,7 +76,8 @@ export class ResetPasswordComponent implements OnInit {
         this.validateToken();
       } else {
         this.isValidating = false;
-        this.snackBar.open('Invalid reset link. Please request a new one.', 'Close', {
+        this.errorMessage = 'Invalid reset link. Please request a new one.';
+        this.snackBar.open(this.errorMessage, 'Close', {
           duration: 5000,
           panelClass: ['error-snackbar']
         });
@@ -79,12 +87,13 @@ export class ResetPasswordComponent implements OnInit {
 
   private validateToken(): void {
     this.authService.validateResetToken(this.token).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.isValidating = false;
-        if (response.success) {
+        if (response.message?.includes('valid') || response.status === 'success') {
           this.isTokenValid = true;
         } else {
-          this.snackBar.open(response.message, 'Close', {
+          this.errorMessage = response.message || 'Invalid or expired token.';
+          this.snackBar.open(this.errorMessage, 'Close', {
             duration: 5000,
             panelClass: ['error-snackbar']
           });
@@ -92,8 +101,8 @@ export class ResetPasswordComponent implements OnInit {
       },
       error: (error) => {
         this.isValidating = false;
-        const message = error.error?.message || 'Invalid or expired token.';
-        this.snackBar.open(message, 'Close', {
+        this.errorMessage = error.userMessage || 'Invalid or expired token.';
+        this.snackBar.open(this.errorMessage, 'Close', {
           duration: 5000,
           panelClass: ['error-snackbar']
         });
@@ -108,25 +117,31 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
 
     this.authService.resetPassword({
       token: this.token,
       newPassword: this.resetForm.value.newPassword,
       confirmPassword: this.resetForm.value.confirmPassword
     }).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.isLoading = false;
-        if (response.success) {
+        if (response.message?.includes('successful') || response.success) {
           this.resetSuccess = true;
-          this.snackBar.open(response.message, 'Close', {
+          this.successMessage = response.message || 'Password reset successful!';
+          
+          this.snackBar.open(this.successMessage, 'Close', {
             duration: 3000,
             panelClass: ['success-snackbar']
           });
+          
           setTimeout(() => {
             this.router.navigate(['/login']);
           }, 3000);
         } else {
-          this.snackBar.open(response.message, 'Close', {
+          this.errorMessage = response.message || 'Failed to reset password.';
+          this.snackBar.open(this.errorMessage, 'Close', {
             duration: 5000,
             panelClass: ['error-snackbar']
           });
@@ -134,8 +149,8 @@ export class ResetPasswordComponent implements OnInit {
       },
       error: (error) => {
         this.isLoading = false;
-        const message = error.error?.message || 'Failed to reset password. Please try again.';
-        this.snackBar.open(message, 'Close', {
+        this.errorMessage = error.userMessage || 'Failed to reset password. Please try again.';
+        this.snackBar.open(this.errorMessage, 'Close', {
           duration: 5000,
           panelClass: ['error-snackbar']
         });

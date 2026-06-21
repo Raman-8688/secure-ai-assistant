@@ -77,27 +77,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        /*
-         * Remove "Bearer ".
-         */
-//        String token =
-//                authHeader.substring(7);
-//
-//        /*
-//         * Validate token.
-//         */
-//        if (!jwtService.isTokenValid(token)) {
-//
-//            filterChain.doFilter(request, response);
-//            return;
-//        }
-//        System.out.println("Request URL: " + request.getRequestURI());
-//        System.out.println("Auth Header: " + authHeader);
-
         String token = authHeader.substring(7);
-
-//        System.out.println("Token: " + token);
-//        System.out.println("Token valid: " + jwtService.isTokenValid(token));
 
         if (!jwtService.isTokenValid(token)) {
             filterChain.doFilter(request, response);
@@ -105,25 +85,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String email = jwtService.extractEmail(token);
-//        System.out.println("Email from token: " + email);
-        /*
-         * Extract user email.
-         */
-//        String email =
-//                jwtService.extractEmail(token);
-
-        /*
-         * Create Spring Security user object.
-         */
         UserDetails userDetails =
                 User.withUsername(email)
                         .password("")
                         .authorities(Collections.emptyList())
                         .build();
-
-        /*
-         * Create authentication token.
-         */
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(
                         userDetails,

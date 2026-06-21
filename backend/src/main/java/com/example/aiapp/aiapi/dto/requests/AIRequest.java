@@ -1,4 +1,4 @@
-package com.example.aiapp.aiapi.dto;
+package com.example.aiapp.aiapi.dto.requests;
 
 public class AIRequest {
     private String question;
