@@ -1,6 +1,4 @@
 // src/app/core/interceptors/error.interceptor.ts
-// REPLACE your existing error.interceptor.ts with this
-
 import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
@@ -11,65 +9,137 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      // 1. No internet connection
+      // No internet connection
       if (!networkService.isOnline) {
         return throwError(() => ({
-          userMessage:
-            'No internet connection. Please check your network and try again.',
+          userMessage: 'No internet connection. Please check your network and try again.',
           type: 'network',
         }));
       }
 
-      // 2. Network-level failure (backend unreachable)
+      // Network-level failure
       if (error.status === 0) {
         return throwError(() => ({
-          userMessage:
-            'Unable to connect to the server. Please try again in a moment.',
+          userMessage: 'Unable to connect to the server. Please try again in a moment.',
           type: 'server_down',
         }));
       }
 
-      // 3. Auth errors
+      // ✅ Check if it's a login or register request
+      const isAuthRequest = req.url.includes('/api/auth/login') || 
+                           req.url.includes('/api/auth/register') ||
+                           req.url.includes('/api/auth/verify-email') ||
+                           req.url.includes('/api/auth/resend-otp') ||
+                           req.url.includes('/api/auth/forgot-password') ||
+                           req.url.includes('/api/auth/reset-password');
+
+      // 401 - Unauthorized
       if (error.status === 401) {
+        // ✅ For login/register endpoints, use backend message
+        if (isAuthRequest) {
+          let msg = 'Invalid credentials. Please try again.';
+          if (error.error?.error) {
+            msg = error.error.error;
+          } else if (error.error?.message) {
+            msg = error.error.message;
+          }
+          return throwError(() => ({
+            userMessage: msg,
+            type: 'auth_error',
+          }));
+        }
+        
+        // For protected endpoints, session expired
         return throwError(() => ({
           userMessage: 'Your session has expired. Please log in again.',
           type: 'auth',
         }));
       }
 
+      // 403 - Forbidden
       if (error.status === 403) {
+        let msg = 'You do not have permission to perform this action.';
+        if (error.error?.error) {
+          msg = error.error.error;
+        } else if (error.error?.message) {
+          msg = error.error.message;
+        }
         return throwError(() => ({
-          userMessage: 'You do not have permission to perform this action.',
+          userMessage: msg,
           type: 'forbidden',
         }));
       }
 
-      // 4. Backend validation errors
+      // 404 - Not Found
+      if (error.status === 404) {
+        let msg = 'Resource not found.';
+        if (error.error?.error) {
+          msg = error.error.error;
+        } else if (error.error?.message) {
+          msg = error.error.message;
+        }
+        return throwError(() => ({
+          userMessage: msg,
+          type: 'not_found',
+        }));
+      }
+
+      // 400 - Bad Request (Validation errors)
       if (error.status === 400) {
-        const msg =
-          error.error?.error ||
-          error.error?.message ||
-          'Invalid request. Please check your input.';
+        let msg = 'Invalid request. Please check your input.';
+        if (error.error?.error) {
+          msg = error.error.error;
+        } else if (error.error?.message) {
+          msg = error.error.message;
+        } else if (typeof error.error === 'string') {
+          msg = error.error;
+        }
         return throwError(() => ({
           userMessage: msg,
           type: 'validation',
         }));
       }
 
-      // 5. Backend/AI service error
+      // 429 - Too Many Requests
+      if (error.status === 429) {
+        let msg = 'Too many requests. Please try again later.';
+        if (error.error?.error) {
+          msg = error.error.error;
+        } else if (error.error?.message) {
+          msg = error.error.message;
+        }
+        return throwError(() => ({
+          userMessage: msg,
+          type: 'rate_limit',
+        }));
+      }
+
+      // 500 - Server Error
       if (error.status === 500 || error.status === 503) {
-        const msg =
-          error.error?.error ||
-          'The AI service is temporarily unavailable. Please try again later.';
+        let msg = 'The service is temporarily unavailable. Please try again later.';
+        if (error.error?.error) {
+          msg = error.error.error;
+        } else if (error.error?.message) {
+          msg = error.error.message;
+        }
         return throwError(() => ({
           userMessage: msg,
           type: 'server_error',
         }));
       }
 
-      // 6. Fallback — never show raw error details
+      // Fallback - try to get message from backend
+      let fallbackMsg = 'Something went wrong. Please try again.';
+      if (error.error?.error) {
+        fallbackMsg = error.error.error;
+      } else if (error.error?.message) {
+        fallbackMsg = error.error.message;
+      } else if (typeof error.error === 'string') {
+        fallbackMsg = error.error;
+      }
+
       return throwError(() => ({
-        userMessage: 'Something went wrong. Please try again.',
+        userMessage: fallbackMsg,
         type: 'unknown',
       }));
     }),

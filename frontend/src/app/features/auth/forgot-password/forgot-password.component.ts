@@ -1,15 +1,14 @@
-// src/app/components/auth/forgot-password/forgot-password.component.ts
+// src/app/features/auth/forgot-password/forgot-password.component.ts
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthLayoutComponent } from '../../../shared/components/auth-layout/auth-layout.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/services/theme.service';
 
@@ -19,13 +18,12 @@ import { ThemeService } from '../../../core/services/theme.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
+    MatSnackBarModule,
     MatIconModule,
+    MatButtonModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatTooltipModule,
+    AuthLayoutComponent
   ],
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css']
@@ -34,6 +32,15 @@ export class ForgotPasswordComponent {
   forgotForm: FormGroup;
   isLoading = false;
   isSubmitted = false;
+  errorMessage = '';
+  successMessage = '';
+
+  animatedLines: string[] = [
+    'security Reset your password securely',
+    'email Check your email for reset link',
+    'lock_reset Create a new strong password',
+    'verified Enterprise-grade security'
+  ];
 
   get isDark(): boolean {
     return this.themeService.isDark;
@@ -58,13 +65,17 @@ export class ForgotPasswordComponent {
     }
 
     this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
 
     this.authService.forgotPassword({
       email: this.forgotForm.value.email.toLowerCase().trim()
     }).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.isLoading = false;
         this.isSubmitted = true;
+        this.successMessage = response.message;
+        
         this.snackBar.open(response.message, 'Close', {
           duration: 5000,
           panelClass: ['success-snackbar']
@@ -72,18 +83,9 @@ export class ForgotPasswordComponent {
       },
       error: (error) => {
         this.isLoading = false;
+        this.errorMessage = error.userMessage || 'Failed to send reset link. Please try again.';
         
-        let message = 'Failed to send reset link. Please try again.';
-        
-        if (error.status === 404) {
-          message = 'This email is not registered. Please create an account first.';
-        } else if (error.status === 429) {
-          message = 'Too many reset attempts. Please try again after 24 hours.';
-        } else if (error.error?.message) {
-          message = error.error.message;
-        }
-        
-        this.snackBar.open(message, 'Close', {
+        this.snackBar.open(this.errorMessage, 'Close', {
           duration: 5000,
           panelClass: ['error-snackbar']
         });

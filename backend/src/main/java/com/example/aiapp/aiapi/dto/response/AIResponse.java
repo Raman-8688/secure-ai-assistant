@@ -1,4 +1,4 @@
-package com.example.aiapp.aiapi.dto;
+package com.example.aiapp.aiapi.dto.response;
 
 public class AIResponse {
     private String answer;

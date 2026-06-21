@@ -1,6 +1,6 @@
 package com.example.aiapp.aiapi.controller;
 
-import com.example.aiapp.aiapi.dto.ChatHistoryResponse;
+import com.example.aiapp.aiapi.dto.response.ChatHistoryResponse;
 import com.example.aiapp.aiapi.entity.ChatHistory;
 import com.example.aiapp.aiapi.repository.ChatHistoryRepository;
 import com.example.aiapp.aiapi.service.AIService;

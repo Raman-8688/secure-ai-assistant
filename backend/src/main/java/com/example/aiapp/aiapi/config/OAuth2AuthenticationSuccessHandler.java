@@ -37,10 +37,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
         OAuth2User oauth2User = oauthToken.getPrincipal();
         String provider = oauthToken.getAuthorizedClientRegistrationId();
-
-        log.info("OAuth2 login successful for provider: {}", provider);
-        log.debug("OAuth2 User Attributes: {}", oauth2User.getAttributes());
-
         String email = null;
         String name = null;
 

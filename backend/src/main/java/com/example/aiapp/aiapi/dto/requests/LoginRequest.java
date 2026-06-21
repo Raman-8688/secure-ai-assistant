@@ -1,4 +1,4 @@
-package com.example.aiapp.aiapi.dto;
+package com.example.aiapp.aiapi.dto.requests;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

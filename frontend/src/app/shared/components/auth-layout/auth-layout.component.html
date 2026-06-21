@@ -1,0 +1,150 @@
+<!-- src/app/shared/components/auth-layout/auth-layout.component.html -->
+<div class="auth-root" [class.dark-theme]="isDark">
+  <div class="auth-container">
+    
+    <!-- TOP BAR -->
+    <div class="auth-top-bar">
+      <div class="auth-brand">
+        <mat-icon class="auth-brand-icon">smart_toy</mat-icon>
+        <span class="auth-brand-name">SecureAI Assistant</span>
+        <span class="auth-brand-badge">v1.0</span>
+      </div>
+      <button class="auth-theme-toggle" (click)="onThemeToggle()" matTooltip="Toggle theme">
+        <mat-icon>{{ isDark ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="auth-main-content">
+      
+      <!-- LEFT: Info Section -->
+      <div class="auth-info-section">
+        <div class="auth-app-description">
+          <h2 class="auth-app-title">{{ title }}</h2>
+          <p class="auth-app-desc">{{ subtitle }}</p>
+          <p class="auth-app-tagline" *ngIf="!showFeatures">Secure, fast, and intelligent.</p>
+        </div>
+
+        <!-- Animated Text -->
+        <div class="auth-animated-container" *ngIf="animatedLines.length > 0">
+          <div class="auth-text-line" *ngFor="let line of animatedLines; let i = index"
+               [class.active]="i === currentLineIndex"
+               [class.fading]="i === previousLineIndex">
+            <mat-icon class="auth-line-icon">{{ line.split(' ')[0] }}</mat-icon>
+            <span>{{ line.substring(line.indexOf(' ') + 1) }}</span>
+          </div>
+        </div>
+
+        <!-- Features -->
+        <div class="auth-features" *ngIf="showFeatures && features.length > 0">
+          <div class="auth-feature-item" *ngFor="let feature of features">
+            <mat-icon>check_circle</mat-icon>
+            <span>{{ feature }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Form Section -->
+      <div class="auth-form-section">
+        
+        <!-- Loading State -->
+        <div *ngIf="showLoading" class="auth-loading-state-full">
+          <mat-spinner diameter="40"></mat-spinner>
+          <p>Loading...</p>
+        </div>
+
+        <!-- Success State -->
+        <div *ngIf="showSuccess" class="auth-success-state">
+          <mat-icon class="auth-success-icon">check_circle</mat-icon>
+          <p class="auth-success-message">{{ successMessage }}</p>
+          <p class="auth-redirect-message">Redirecting...</p>
+          <ng-content select="[successActions]"></ng-content>
+        </div>
+
+        <!-- Form Content - Always visible when not loading/success -->
+        <ng-container *ngIf="!showLoading && !showSuccess">
+          
+          <div class="auth-form-header">
+            <div class="auth-form-icon">
+              <mat-icon>{{ icon }}</mat-icon>
+            </div>
+            <div>
+              <h2 class="auth-form-title">{{ formTitle }}</h2>
+              <p class="auth-form-subtitle">{{ formSubtitle }}</p>
+            </div>
+          </div>
+
+          <!-- Use ng-template for form content -->
+          <ng-template #formContent>
+            <ng-content></ng-content>
+          </ng-template>
+
+          <!-- Login: OAuth First -->
+          <ng-container *ngIf="!formFirst">
+            <div class="auth-oauth-group" *ngIf="showOAuth">
+              <button class="auth-oauth-btn auth-oauth-google" (click)="onGoogleLogin()">
+                <img src="assets/icons/google.svg" alt="Google" class="auth-oauth-logo">
+                Continue with Google
+              </button>
+              <button class="auth-oauth-btn auth-oauth-github" (click)="onGithubLogin()">
+                <img src="assets/icons/github.svg" alt="GitHub" class="auth-oauth-logo">
+                Continue with GitHub
+              </button>
+            </div>
+
+            <div class="auth-divider" *ngIf="showOAuth">
+              <span>or sign in with email</span>
+            </div>
+
+            <ng-container *ngTemplateOutlet="formContent"></ng-container>
+          </ng-container>
+
+          <!-- Register: Form First -->
+          <ng-container *ngIf="formFirst">
+            <ng-container *ngTemplateOutlet="formContent"></ng-container>
+
+            <div class="auth-oauth-group" *ngIf="showOAuth">
+              <div class="auth-divider">
+                <span>or continue with</span>
+              </div>
+              <button class="auth-oauth-btn auth-oauth-google" (click)="onGoogleLogin()">
+                <img src="assets/icons/google.svg" alt="Google" class="auth-oauth-logo">
+                Continue with Google
+              </button>
+              <button class="auth-oauth-btn auth-oauth-github" (click)="onGithubLogin()">
+                <img src="assets/icons/github.svg" alt="GitHub" class="auth-oauth-logo">
+                Continue with GitHub
+              </button>
+            </div>
+          </ng-container>
+
+          <!-- Extra Actions -->
+          <ng-content select="[extraActions]"></ng-content>
+
+          <div class="auth-security-note">
+            <mat-icon>security</mat-icon>
+            <span>JWT · OAuth2 · Spring Security</span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- FOOTER with Social Links -->
+    <div class="auth-bottom-footer">
+      <span>© 2026 SecureAI Assistant.</span>
+      <span>Built with <span class="auth-footer-heart">❤️</span> by Raman</span>
+      <div class="auth-footer-social">
+        <a href="https://github.com/Raman-8688" target="_blank" matTooltip="GitHub">
+          <img src="assets/icons/github.svg" alt="GitHub" class="auth-footer-icon">
+        </a>
+        <a href="https://www.linkedin.com/in/boya-ramanjaneyulu-155021258/" target="_blank" matTooltip="LinkedIn">
+          <img src="assets/icons/linkedin.svg" alt="LinkedIn" class="auth-footer-icon">
+        </a>
+        <a href="https://raman-8688.github.io/portfolio-projects/" target="_blank" matTooltip="Dev Info">
+          <mat-icon>account_circle</mat-icon>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
