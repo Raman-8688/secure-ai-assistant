@@ -8,9 +8,21 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 
+
+
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
+
 @Service
 @Slf4j
 public class EmailService {
+
+
+    @Value("${spring.mail.username:NOT_FOUND}")
+    private String mailUsername;
+
+    @Value("${spring.mail.host:NOT_FOUND}")
+    private String mailHost;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -23,6 +35,11 @@ public class EmailService {
      */
     public void sendOtpEmail(String toEmail, String otp) {
         try {
+            log.info("========== EMAIL SEND START ==========");
+            log.info("Sending OTP to: {}", toEmail);
+            log.info("Configured Mail Username: {}", mailUsername);
+
+            long startTime = System.currentTimeMillis();
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(toEmail);
             message.setSubject("AI Assistant - Verify Your Email");
@@ -37,6 +54,13 @@ public class EmailService {
             ));
 
             mailSender.send(message);
+            long endTime = System.currentTimeMillis();
+
+            log.info("mailSender.send() completed");
+            log.info("Time Taken: {} ms", (endTime - startTime));
+
+            log.info("OTP email sent successfully to {}", toEmail);
+            log.info("========== EMAIL SEND END ==========");
             log.info("OTP email sent to: {}", toEmail);
 
         } catch (Exception e) {
@@ -79,4 +103,28 @@ public class EmailService {
             log.info("=========================================");
         }
     }
+
+
+
+    @PostConstruct
+    public void verifyMailConfiguration() {
+
+        log.info("====================================");
+        log.info("MAIL CONFIGURATION CHECK");
+        log.info("****Mail Host: {}", mailHost);
+        log.info("****Mail Username: {}", mailUsername);
+
+        String envUsername = System.getenv("MAIL_USERNAME");
+
+        if (envUsername != null) {
+            log.info("ENV MAIL_USERNAME loaded successfully");
+        } else {
+            log.error("ENV MAIL_USERNAME IS NULL");
+        }
+
+        log.info("====================================");
+    }
+
+
+
 }
