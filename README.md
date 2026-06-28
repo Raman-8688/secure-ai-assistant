@@ -1,272 +1,278 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" />
-<img src="https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white" />
-<img src="https://img.shields.io/badge/Angular-17-DD0031?style=for-the-badge&logo=angular&logoColor=white" />
-<img src="https://img.shields.io/badge/PostgreSQL-Neon-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" />
-<img src="https://img.shields.io/badge/JWT-Authentication-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" />
-<img src="https://img.shields.io/badge/OAuth2-Google%20%7C%20GitHub-4285F4?style=for-the-badge&logo=google&logoColor=white" />
-<img src="https://img.shields.io/badge/Deployed-Vercel%20%7C%20Render-000000?style=for-the-badge&logo=vercel&logoColor=white" />
-<img src="https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+# 🤖 SecureAI Assistant
+
+### Enterprise-grade AI Chat Platform built with Angular, Spring Boot, JWT Authentication, OAuth2, PostgreSQL and OpenAI.
 
 <br/>
+
+[![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/projects/jdk/21/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Angular](https://img.shields.io/badge/Angular-17-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://neon.tech/)
+[![JWT](https://img.shields.io/badge/JWT-Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
+[![OAuth2](https://img.shields.io/badge/OAuth2-Google-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://developers.google.com/identity/protocols/oauth2)
+[![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Vercel](https://img.shields.io/badge/Frontend-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
+[![Render](https://img.shields.io/badge/Backend-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com/)
+
 <br/>
 
-# SecureAI Assistant
+[![GitHub Stars](https://img.shields.io/github/stars/Raman-8688/secure-ai-assistant?style=flat-square&logo=github&color=yellow)](https://github.com/Raman-8688/secure-ai-assistant/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/Raman-8688/secure-ai-assistant?style=flat-square&logo=github&color=blue)](https://github.com/Raman-8688/secure-ai-assistant/network/members)
+[![GitHub Issues](https://img.shields.io/github/issues/Raman-8688/secure-ai-assistant?style=flat-square&logo=github&color=red)](https://github.com/Raman-8688/secure-ai-assistant/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/Raman-8688/secure-ai-assistant?style=flat-square&logo=github&color=green)](https://github.com/Raman-8688/secure-ai-assistant/commits/main)
+[![Repo Size](https://img.shields.io/github/repo-size/Raman-8688/secure-ai-assistant?style=flat-square&logo=github&color=orange)](https://github.com/Raman-8688/secure-ai-assistant)
+[![License](https://img.shields.io/github/license/Raman-8688/secure-ai-assistant?style=flat-square&color=purple)](LICENSE)
 
-### A production-grade, full-stack AI chat platform built with enterprise-level security, OAuth2 social login, OTP-based email verification, voice input, and persistent chat history.
+<br/>
 
-**[Live Demo](https://secure-ai-assistant-roan.vercel.app)** · **[Backend API](https://secure-ai-assistant-backend.onrender.com)** · **[GitHub Repository](https://github.com/Raman-8688/secure-ai-assistant)**
+<img src="src/assets/docs/screenshots/main_screen_with_data.png" alt="SecureAI Assistant - Chat Interface" width="90%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);" />
+
+<br/><br/>
+
+**[🚀 Live Demo](https://secure-ai-assistant-roan.vercel.app)** &nbsp;·&nbsp; **[📖 API Docs](#api-reference)** &nbsp;·&nbsp; **[⭐ Give a Star](https://github.com/Raman-8688/secure-ai-assistant)**
 
 </div>
 
 ---
 
-## Table of Contents
+## 📋 Table of Contents
 
-1. [Project Overview](#project-overview)
-2. [Key Features](#key-features)
-3. [Tech Stack](#tech-stack)
-4. [System Architecture](#system-architecture)
-5. [Authentication & Security Flow](#authentication--security-flow)
-6. [Database Schema](#database-schema)
-7. [API Reference](#api-reference)
-8. [Project Structure](#project-structure)
-9. [Environment Configuration](#environment-configuration)
-10. [Local Development Setup](#local-development-setup)
-11. [Deployment Architecture](#deployment-architecture)
-12. [Screenshots](#screenshots)
-
----
-
-## Project Overview
-
-SecureAI Assistant is a full-stack AI-powered chat application engineered to demonstrate enterprise-level security patterns in a modern web stack. It integrates Spring Security with stateless JWT authentication, multi-provider OAuth2 social login (Google & GitHub), OTP-based email verification via SMTP, and a real-time AI conversation interface powered by OpenAI-compatible LLMs.
-
-The frontend is built with Angular 17 (standalone components), featuring a dark/light theme toggle, voice-to-text chat input via the Web Speech API, animated UI transitions, and a persistent sidebar for chat history. The backend exposes a clean RESTful API following layered architecture principles — Controller → Service → Repository → Entity.
-
-This project was built to reflect real-world production patterns: environment-based configuration profiles, secrets externalized via environment variables, Docker containerization, CI/CD-friendly deployments on Render (backend) and Vercel (frontend), and a cloud-hosted PostgreSQL database on Neon.
+- [Why I Built This](#-why-i-built-this)
+- [Project Highlights](#-project-highlights)
+- [Feature Overview](#-feature-overview)
+- [Tech Stack](#-tech-stack)
+- [System Architecture](#-system-architecture)
+- [Authentication Flow](#-authentication-flow)
+- [Database Schema](#-database-schema)
+- [API Reference](#-api-reference)
+- [Project Structure](#-project-structure)
+- [Screenshots](#-screenshots)
+- [Environment Configuration](#-environment-configuration)
+- [Local Development Setup](#-local-development-setup)
+- [Deployment Architecture](#-deployment-architecture)
+- [Challenges Faced](#-challenges-faced)
+- [What I Learned](#-what-i-learned)
+- [Future Enhancements](#-future-enhancements)
 
 ---
 
-## Key Features
+## 💡 Why I Built This
 
-### Security & Authentication
-- Stateless JWT authentication with configurable expiration
-- BCrypt password hashing via Spring Security's `PasswordEncoder`
-- OTP-based email verification on registration (6-digit OTP, time-limited)
-- Secure password reset flow with expiring reset tokens and rate limiting
-- OAuth2 social login with Google (GitHub-ready) using a custom `OAuth2AuthenticationSuccessHandler`
-- Custom `JwtAuthenticationFilter` integrated into the Spring Security filter chain
-- Global exception handling with structured `ErrorResponse` payloads
+SecureAI Assistant was built to demonstrate how enterprise-grade authentication, AI integration, and cloud deployment can be combined into a production-ready full-stack application. Most student projects stop at CRUD — this one goes further.
 
-### AI Chat
-- Real-time Q&A powered by an OpenAI-compatible API (configurable endpoint)
-- Per-user chat history stored in PostgreSQL, retrieved in descending order
-- Individual chat history item deletion (ownership-verified before delete)
-- Voice-to-text input using the browser's Web Speech API
+The goal was to implement the exact security patterns used in real-world MNC applications: stateless JWT, OAuth2 social login, OTP-based email verification, rate-limited password reset, and role-based access — all wired into a modern Angular 17 frontend with voice input and persistent chat history.
 
-### Frontend (Angular 17)
-- Standalone component architecture (no NgModules)
-- Global dark/light theme system with `localStorage` persistence
-- Reactive forms with client-side validation
-- Book-style animated login panel with feature highlights
-- Chat history sidebar with scroll and delete capability
-- Responsive layout with Tailwind-inspired utility classes
+Everything is deployed on real cloud infrastructure: Angular on Vercel CDN, Spring Boot as a Docker container on Render, and PostgreSQL on Neon's serverless cloud.
 
 ---
 
-## Tech Stack
+## ⭐ Project Highlights
+
+| Capability | Detail |
+|---|---|
+| JWT Authentication | Stateless, HS256-signed, configurable TTL |
+| Google OAuth2 | Full social login with custom success handler |
+| Email OTP Verification | 6-digit OTP sent via SMTP, time-limited |
+| Forgot Password | UUID token, rate-limited, expiry-checked |
+| AI Chat | OpenAI-compatible API, per-user history |
+| Voice Input | Web Speech API — talk to the AI |
+| Chat History | Stored in PostgreSQL, user-scoped, deletable |
+| Dark / Light Theme | Global theme system with persistence |
+| Responsive UI | Works on desktop and mobile |
+| Docker | Production-ready containerized backend |
+| Cloud Deployed | Vercel (frontend) + Render (backend) + Neon (DB) |
+| Spring Security 6 | Full filter chain, CORS, stateless session |
+
+---
+
+## ✅ Feature Overview
+
+| Feature | Status |
+|---|---|
+| JWT Authentication | ✅ Done |
+| Google OAuth2 Login | ✅ Done |
+| Email OTP Verification | ✅ Done |
+| Resend OTP | ✅ Done |
+| Forgot Password | ✅ Done |
+| Password Reset (Token) | ✅ Done |
+| AI Chat (Q&A) | ✅ Done |
+| Chat History (Save/View) | ✅ Done |
+| Delete Chat History | ✅ Done |
+| Voice Input | ✅ Done |
+| Dark Mode | ✅ Done |
+| Light Mode | ✅ Done |
+| Responsive Layout | ✅ Done |
+| Docker Containerization | ✅ Done |
+| Production Deployment | ✅ Done |
+| Environment Profiles | ✅ Done |
+| Global Error Handling | ✅ Done |
+| Auth Guard (Route Protection) | ✅ Done |
+
+---
+
+## 🛠 Tech Stack
 
 | Layer | Technology | Purpose |
 |---|---|---|
-| Backend Language | Java 21 | Core application runtime |
+| Backend Language | Java 21 | Core runtime |
 | Backend Framework | Spring Boot 3.x | REST API, DI, autoconfiguration |
-| Security | Spring Security 6 | Authentication, authorization, filter chain |
-| Authentication | JWT (jjwt) | Stateless token-based auth |
-| Social Login | OAuth2 (Spring Security) | Google / GitHub login |
-| Email | Spring Mail (SMTP) | OTP & password reset emails |
+| Security | Spring Security 6 | Filter chain, auth, CORS |
+| Token Auth | JWT (jjwt) | Stateless authentication |
+| Social Login | OAuth2 (Spring Security) | Google login |
+| Email | Spring Mail + Gmail SMTP | OTP & password reset emails |
 | AI Integration | OpenAI-compatible API | Chat completions (GPT-3.5-turbo) |
 | ORM | Spring Data JPA / Hibernate | Database abstraction |
-| Database | PostgreSQL (Neon cloud) | Persistent user & chat data |
-| Frontend | Angular 17 | SPA framework |
-| Frontend Styling | SCSS + CSS Variables | Theme system |
+| Database | PostgreSQL (Neon cloud) | User & chat data persistence |
+| Frontend | Angular 17 (Standalone) | SPA framework |
+| Styling | SCSS + CSS Variables | Theming system |
 | Voice Input | Web Speech API | Voice-to-text chat |
 | Containerization | Docker | Backend packaging |
-| Frontend Hosting | Vercel | CDN-based deployment |
+| Frontend Hosting | Vercel | CDN deployment |
 | Backend Hosting | Render | Docker container hosting |
 | Build Tool | Maven | Backend dependency management |
 
 ---
 
-## System Architecture
+## 🏗 System Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         CLIENT LAYER                            │
-│                                                                 │
-│   Angular 17 SPA (Vercel CDN)                                   │
-│   ┌────────────┐  ┌─────────────┐  ┌──────────────────────┐    │
-│   │ Login/     │  │  Chat UI    │  │  Chat History        │    │
-│   │ Register   │  │  + Voice    │  │  Sidebar             │    │
-│   └────────────┘  └─────────────┘  └──────────────────────┘    │
-└─────────────────────────┬───────────────────────────────────────┘
-                          │ HTTPS + Bearer JWT
-┌─────────────────────────▼───────────────────────────────────────┐
-│                      API GATEWAY LAYER                          │
-│                                                                 │
-│   Spring Security Filter Chain                                  │
-│   ┌─────────────────────────────────────────────────────────┐   │
-│   │  JwtAuthenticationFilter → SecurityConfig → CORS        │   │
-│   └─────────────────────────────────────────────────────────┘   │
-└─────────────────────────┬───────────────────────────────────────┘
-                          │
-┌─────────────────────────▼───────────────────────────────────────┐
-│                     APPLICATION LAYER                           │
-│                                                                 │
-│  ┌──────────────────┐          ┌───────────────────────┐        │
-│  │  AuthController  │          │     AIController      │        │
-│  │  /api/auth/**    │          │     /api/ai/**        │        │
-│  └────────┬─────────┘          └────────────┬──────────┘        │
-│           │                                 │                   │
-│  ┌────────▼─────────┐          ┌────────────▼──────────┐        │
-│  │   AuthService    │          │       AIService        │        │
-│  │   JwtService     │          │  (OpenAI REST client) │        │
-│  │   EmailService   │          └───────────────────────┘        │
-│  └────────┬─────────┘                                           │
-└───────────┼─────────────────────────────────────────────────────┘
-            │
-┌───────────▼─────────────────────────────────────────────────────┐
-│                      DATA LAYER                                 │
-│                                                                 │
-│   Spring Data JPA → Hibernate → PostgreSQL (Neon)               │
-│   ┌──────────────┐          ┌──────────────────────┐            │
-│   │  users table │          │  chat_history table  │            │
-│   └──────────────┘          └──────────────────────┘            │
-└─────────────────────────────────────────────────────────────────┘
-            │                           │
-            ▼                           ▼
-     SMTP (Gmail)              OpenAI-compatible
-     Email Service             LLM API endpoint
-```
+```mermaid
+graph TB
+    subgraph Client ["🌐 Client — Vercel CDN"]
+        A[Angular 17 SPA]
+        A1[Login / Register]
+        A2[Chat UI + Voice]
+        A3[Chat History Sidebar]
+        A --> A1
+        A --> A2
+        A --> A3
+    end
 
----
+    subgraph Gateway ["🔒 API Gateway — Spring Security"]
+        B[JwtAuthenticationFilter]
+        B1[SecurityConfig + CORS]
+        B --> B1
+    end
 
-## Authentication & Security Flow
+    subgraph App ["⚙️ Application Layer — Render Docker"]
+        C[AuthController /api/auth/**]
+        D[AIController /api/ai/**]
+        E[AuthService + JwtService]
+        F[AIService]
+        G[EmailService — Gmail SMTP]
+        C --> E
+        D --> F
+        E --> G
+    end
 
-### Registration + Email Verification
+    subgraph Data ["🗄️ Data Layer — Neon PostgreSQL"]
+        H[(users table)]
+        I[(chat_history table)]
+    end
 
-```
-User fills Register Form
-        │
-        ▼
-POST /api/auth/register
-        │
-        ├── Validate request body (@Valid)
-        ├── Check if email already exists
-        ├── Hash password with BCrypt
-        ├── Generate 6-digit OTP + set expiry (LocalDateTime)
-        ├── Save User (emailVerified = false)
-        └── Send OTP via SMTP (Spring Mail)
-                │
-                ▼
-User receives OTP email
-        │
-        ▼
-POST /api/auth/verify-email  { email, otp }
-        │
-        ├── Validate OTP match
-        ├── Check OTP not expired
-        ├── Set emailVerified = true
-        └── Clear OTP fields
-```
+    subgraph External ["🌍 External Services"]
+        J[OpenAI-compatible LLM API]
+        K[Google OAuth2]
+        L[Gmail SMTP]
+    end
 
-### JWT Login Flow
-
-```
-POST /api/auth/login  { email, password }
-        │
-        ├── Load user from DB
-        ├── Check emailVerified == true
-        ├── BCrypt.matches(rawPassword, hashedPassword)
-        ├── Update lastLogin timestamp
-        └── Generate signed JWT (HS256, configurable expiry)
-                │
-                ▼
-        Client stores JWT
-                │
-        Every subsequent request:
-                │
-                ▼
-GET/POST /api/**  [Authorization: Bearer <token>]
-        │
-        ▼
-JwtAuthenticationFilter
-        │
-        ├── Extract token from Authorization header
-        ├── Validate signature + expiry (JwtService)
-        ├── Load UserDetails from DB
-        └── Set SecurityContextHolder → request proceeds
-```
-
-### OAuth2 Social Login
-
-```
-User clicks "Continue with Google"
-        │
-        ▼
-Spring Security redirects → Google OAuth consent screen
-        │
-        ▼
-Google returns authorization code → /login/oauth2/code/google
-        │
-        ▼
-CustomOAuth2UserService.loadUser()
-        │
-        ├── Extract email, name, providerId from OAuth2User
-        ├── Check if user exists in DB
-        │     ├── Exists → update lastLogin, provider fields
-        │     └── New → create user (emailVerified=true, no password)
-        └── Return CustomUserPrincipal
-                │
-                ▼
-OAuth2AuthenticationSuccessHandler
-        │
-        ├── Generate JWT for the OAuth2 user
-        └── Redirect to frontend with token as query param
-```
-
-### Password Reset Flow
-
-```
-POST /api/auth/forgot-password  { email }
-        │
-        ├── Check email registered
-        ├── Rate limit check (passwordResetAttempts)
-        ├── Generate UUID reset token + set expiry
-        └── Send reset link via SMTP
-                │
-                ▼
-GET /api/auth/validate-reset-token?token=xxx
-        │
-        └── Check token exists + not expired
-                │
-                ▼
-POST /api/auth/reset-password  { token, newPassword }
-        │
-        ├── Validate token
-        ├── Hash new password
-        ├── Clear reset token fields
-        └── Update lastPasswordReset
+    A -- "HTTPS + Bearer JWT" --> B
+    B --> C
+    B --> D
+    E --> H
+    F --> I
+    F --> J
+    E --> K
+    G --> L
 ```
 
 ---
 
-## Database Schema
+## 🔐 Authentication Flow
+
+### Registration + OTP Verification
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant FE as Angular Frontend
+    participant BE as Spring Boot API
+    participant DB as PostgreSQL
+    participant EM as Gmail SMTP
+
+    U->>FE: Fill Register Form
+    FE->>BE: POST /api/auth/register
+    BE->>DB: Check email uniqueness
+    BE->>DB: Save user (emailVerified=false) + BCrypt password
+    BE->>EM: Send 6-digit OTP email
+    BE-->>FE: 200 Registration successful
+    FE-->>U: Redirect to Verify Email screen
+    U->>FE: Enter OTP
+    FE->>BE: POST /api/auth/verify-email
+    BE->>DB: Validate OTP + expiry
+    BE->>DB: Set emailVerified=true, clear OTP
+    BE-->>FE: 200 Verified
+    FE-->>U: Redirect to Login
+```
+
+### JWT Login & API Authorization
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant FE as Angular Frontend
+    participant FI as JwtAuthFilter
+    participant BE as Spring Boot API
+    participant DB as PostgreSQL
+
+    U->>FE: Email + Password
+    FE->>BE: POST /api/auth/login
+    BE->>DB: Load user, BCrypt.matches()
+    BE->>DB: Update lastLogin
+    BE-->>FE: JWT Token
+    FE->>FE: Store token in localStorage
+
+    Note over FE,FI: Every subsequent request
+
+    FE->>FI: GET /api/ai/history [Authorization: Bearer token]
+    FI->>FI: Validate JWT signature + expiry
+    FI->>DB: Load UserDetails
+    FI->>BE: SecurityContext set → proceed
+    BE-->>FE: Protected resource
+```
+
+### OAuth2 Google Login
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant FE as Angular
+    participant SS as Spring Security
+    participant G as Google
+    participant DB as PostgreSQL
+
+    U->>FE: Click "Continue with Google"
+    FE->>SS: Redirect to OAuth2 endpoint
+    SS->>G: Authorization redirect
+    G-->>U: Consent screen
+    U->>G: Allow
+    G-->>SS: Auth code → /login/oauth2/code/google
+    SS->>SS: CustomOAuth2UserService.loadUser()
+    SS->>DB: Find or create user (emailVerified=true)
+    SS->>SS: OAuth2AuthenticationSuccessHandler
+    SS->>SS: Generate JWT
+    SS-->>FE: Redirect with ?token=xxx
+    FE->>FE: Store JWT, redirect to /chat
+```
+
+---
+
+## 🗄 Database Schema
 
 ### `users` table
 
-| Column | Type | Constraints | Notes |
+| Column | Type | Constraint | Notes |
 |---|---|---|---|
 | id | BIGSERIAL | PK | Auto-increment |
 | name | VARCHAR | NOT NULL | Display name |
@@ -277,156 +283,203 @@ POST /api/auth/reset-password  { token, newPassword }
 | verification_otp | VARCHAR | NULLABLE | 6-digit OTP |
 | otp_expiry_time | TIMESTAMP | NULLABLE | OTP expiration |
 | created_at | TIMESTAMP | NOT NULL | Set via `@PrePersist` |
-| provider | VARCHAR | NULLABLE | `google`, `github`, or null |
+| provider | VARCHAR | NULLABLE | `google` or null |
 | provider_id | VARCHAR | NULLABLE | OAuth2 provider user ID |
-| last_login | TIMESTAMP | NULLABLE | Updated on each login |
+| last_login | TIMESTAMP | NULLABLE | Updated on login |
 | reset_token | VARCHAR | NULLABLE | UUID for password reset |
 | reset_token_expiry | TIMESTAMP | NULLABLE | Token expiration |
 | last_password_reset | TIMESTAMP | NULLABLE | Audit field |
-| password_reset_attempts | INTEGER | NULLABLE | Rate limiting |
-| reset_token_generated_at | TIMESTAMP | NULLABLE | Rate limiting |
+| password_reset_attempts | INTEGER | NULLABLE | Rate limiting counter |
+| reset_token_generated_at | TIMESTAMP | NULLABLE | Rate limiting timestamp |
 
 ### `chat_history` table
 
-| Column | Type | Constraints | Notes |
+| Column | Type | Constraint | Notes |
 |---|---|---|---|
 | id | BIGSERIAL | PK | Auto-increment |
-| user_email | VARCHAR | NOT NULL | Links to users.email |
+| user_email | VARCHAR | NOT NULL | Scoped to user |
 | question | TEXT | NOT NULL | User's prompt |
 | answer | TEXT | NOT NULL | AI response |
 | created_at | TIMESTAMP | NOT NULL | Default: now() |
 
 ---
 
-## API Reference
+## 📡 API Reference
 
 ### Authentication Endpoints
 
-| Method | Endpoint | Auth Required | Description |
+| Method | Endpoint | Auth | Description |
 |---|---|---|---|
-| POST | `/api/auth/register` | No | Register new user, sends OTP |
-| POST | `/api/auth/verify-email` | No | Verify OTP, activate account |
-| POST | `/api/auth/login` | No | Login, returns JWT |
-| POST | `/api/auth/resend-otp` | No | Resend verification OTP |
-| GET | `/api/auth/me` | JWT | Get current user profile |
-| POST | `/api/auth/forgot-password` | No | Send password reset link |
-| GET | `/api/auth/validate-reset-token` | No | Validate reset token |
-| POST | `/api/auth/reset-password` | No | Set new password |
+| POST | `/api/auth/register` | Public | Register, sends OTP email |
+| POST | `/api/auth/verify-email` | Public | Verify OTP, activate account |
+| POST | `/api/auth/login` | Public | Login, returns JWT |
+| POST | `/api/auth/resend-otp` | Public | Resend OTP |
+| GET | `/api/auth/me` | JWT | Current user profile |
+| POST | `/api/auth/forgot-password` | Public | Send reset link |
+| GET | `/api/auth/validate-reset-token` | Public | Validate reset token |
+| POST | `/api/auth/reset-password` | Public | Set new password |
 
 ### AI Endpoints
 
-| Method | Endpoint | Auth Required | Description |
+| Method | Endpoint | Auth | Description |
 |---|---|---|---|
-| POST | `/api/ai/ask` | JWT | Send a question, get AI response, save to history |
-| GET | `/api/ai/history` | JWT | Get current user's chat history (desc order) |
-| DELETE | `/api/ai/history/{id}` | JWT | Delete a specific chat history item |
-
-### Request / Response Examples
-
-**POST /api/auth/register**
-```json
-// Request
-{
-  "name": "Raman Boya",
-  "email": "raman@example.com",
-  "password": "securePass123"
-}
-
-// Response 200
-{ "message": "Registration successful. Please verify your email." }
-
-// Response 400
-{ "error": "Email already registered." }
-```
-
-**POST /api/auth/login**
-```json
-// Request
-{ "email": "raman@example.com", "password": "securePass123" }
-
-// Response 200
-{ "token": "eyJhbGciOiJIUzI1NiJ9...", "message": "Login successful" }
-
-// Response 401
-{ "error": "Invalid credentials or email not verified." }
-```
-
-**POST /api/ai/ask**
-```json
-// Request (Authorization: Bearer <token>)
-{ "question": "Explain microservices architecture." }
-
-// Response 200
-{ "answer": "Microservices is an architectural style that structures an application as..." }
-```
+| POST | `/api/ai/ask` | JWT | Send question, get AI answer, save history |
+| GET | `/api/ai/history` | JWT | Get user's chat history |
+| DELETE | `/api/ai/history/{id}` | JWT | Delete a chat item |
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 secure-ai-assistant/
 │
-├── backend/                                  (Spring Boot - Java 21)
-│   └── src/main/java/com/example/aiapp/aiapi/
-│       ├── AiapiApplication.java
-│       ├── config/
-│       │   ├── SecurityConfig.java           # Spring Security, CORS, filter chain
-│       │   ├── JwtAuthenticationFilter.java  # JWT extraction & validation filter
-│       │   ├── OAuth2AuthenticationSuccessHandler.java
-│       │   └── PasswordEncoderConfig.java
-│       ├── controller/
-│       │   ├── AuthController.java           # /api/auth/**
-│       │   └── AIController.java             # /api/ai/**
-│       ├── service/
-│       │   ├── AuthService.java              # Registration, login, OTP, reset
-│       │   ├── JwtService.java               # Token generation & validation
-│       │   ├── AIService.java                # OpenAI API client
-│       │   ├── EmailService.java             # Email abstraction
-│       │   ├── SendGridEmailService.java      # SMTP implementation
-│       │   └── CustomOAuth2UserService.java  # OAuth2 user loading
-│       ├── entity/
-│       │   ├── User.java                     # users table
-│       │   └── ChatHistory.java              # chat_history table
-│       ├── repository/
-│       │   ├── UserRepository.java
-│       │   └── ChatHistoryRepository.java
-│       ├── dto/
-│       │   ├── requests/                     # RegisterRequest, LoginRequest, etc.
-│       │   └── response/                     # AuthResponse, AIResponse, etc.
-│       ├── exception/
-│       │   ├── GlobalExceptionHandler.java
-│       │   └── ErrorResponse.java
-│       └── resources/
-│           ├── application.properties        # Main config (env-var based)
-│           ├── application-local.properties  # Local profile
-│           └── application-prod.properties   # Production profile
+├── 📂 backend/                          Spring Boot (Java 21)
+│   └── src/main/java/.../aiapi/
+│       ├── 📂 config/
+│       │   ├── SecurityConfig.java       Spring Security, CORS, filter chain
+│       │   ├── JwtAuthenticationFilter   JWT extraction & validation
+│       │   ├── OAuth2SuccessHandler      Post-OAuth2 JWT generation
+│       │   └── PasswordEncoderConfig     BCrypt bean
+│       │
+│       ├── 📂 controller/
+│       │   ├── AuthController            /api/auth/** endpoints
+│       │   └── AIController              /api/ai/** endpoints
+│       │
+│       ├── 📂 service/
+│       │   ├── AuthService               Registration, login, OTP, reset logic
+│       │   ├── JwtService                Token generation & validation
+│       │   ├── AIService                 OpenAI API REST client
+│       │   ├── EmailService              Email abstraction interface
+│       │   ├── SendGridEmailService      SMTP implementation (Gmail)
+│       │   └── CustomOAuth2UserService   OAuth2 user loading & DB sync
+│       │
+│       ├── 📂 entity/
+│       │   ├── User.java                 users table mapping
+│       │   └── ChatHistory.java          chat_history table mapping
+│       │
+│       ├── 📂 repository/
+│       │   ├── UserRepository            JPA queries for users
+│       │   └── ChatHistoryRepository     Chat data access + ordering
+│       │
+│       ├── 📂 dto/
+│       │   ├── requests/                 RegisterRequest, LoginRequest, etc.
+│       │   └── response/                 AuthResponse, AIResponse, etc.
+│       │
+│       ├── 📂 exception/
+│       │   ├── GlobalExceptionHandler    @ControllerAdvice error handling
+│       │   └── ErrorResponse             Structured error payload
+│       │
+│       └── 📂 resources/
+│           ├── application.properties    Main config (env-var based)
+│           ├── application-local.props   Local dev profile
+│           └── application-prod.props    Production profile
 │
-├── frontend/                                 (Angular 17)
+├── 📂 frontend/                          Angular 17 (Standalone Components)
 │   └── src/app/
-│       ├── components/
-│       │   ├── login/                        # Login + animated book panel
-│       │   ├── register/                     # Registration form
-│       │   ├── forgot-password/              # Password reset request
-│       │   ├── reset-password/               # New password form
-│       │   ├── verify-email/                 # OTP entry screen
-│       │   └── chat/                         # Chat UI + voice input + history
-│       ├── services/
-│       │   ├── auth.service.ts               # JWT storage, login/register calls
-│       │   └── chat.service.ts               # AI ask, history CRUD
-│       ├── guards/
-│       │   └── auth.guard.ts                 # Route protection
-│       └── app.routes.ts                     # Standalone routing
+│       ├── 📂 core/
+│       │   ├── guards/auth.guard.ts      Route protection (JWT check)
+│       │   ├── interceptors/             JWT header injection + error handling
+│       │   ├── models/                   TypeScript interfaces
+│       │   └── services/
+│       │       ├── auth.service.ts       Auth API calls + JWT storage
+│       │       ├── ai.service.ts         Chat API calls + history
+│       │       └── theme.service.ts      Dark/light theme management
+│       │
+│       ├── 📂 features/
+│       │   ├── auth/
+│       │   │   ├── login/                Login form + OAuth2 buttons
+│       │   │   ├── register/             Registration form
+│       │   │   ├── verify-email/         OTP entry screen
+│       │   │   ├── forgot-password/      Reset request form
+│       │   │   ├── reset-password/       New password form
+│       │   │   └── callback/             OAuth2 redirect handler
+│       │   ├── chat-ui/                  Main chat page + history sidebar
+│       │   └── components/
+│       │       ├── chat-input/           Voice + text input component
+│       │       ├── chat-message/         Message bubble component
+│       │       └── markdown-renderer/    AI response markdown display
+│       │
+│       └── 📂 shared/
+│           └── components/auth-layout/   Shared two-panel auth layout
 │
-├── Dockerfile                                # Backend container
+├── 📂 src/assets/docs/screenshots/       All UI screenshots
+├── Dockerfile                            Backend Docker configuration
 └── README.md
 ```
 
 ---
 
-## Environment Configuration
+## 📸 Screenshots
 
-All sensitive values are externalized as environment variables. The backend supports Spring profiles (`local`, `prod`) with `application-{profile}.properties`.
+### Login Page
+
+<table>
+  <tr>
+    <td align="center"><b>Dark Mode</b></td>
+    <td align="center"><b>Light Mode</b></td>
+  </tr>
+  <tr>
+    <td><img src="src/assets/docs/screenshots/login_wiht_darkmode.png" alt="Login Dark Mode" width="100%"/></td>
+    <td><img src="src/assets/docs/screenshots/login_without_dark_mode.png" alt="Login Light Mode" width="100%"/></td>
+  </tr>
+</table>
+
+### Register Page
+
+<table>
+  <tr>
+    <td align="center"><b>Dark Mode</b></td>
+    <td align="center"><b>Light Mode</b></td>
+  </tr>
+  <tr>
+    <td><img src="src/assets/docs/screenshots/register_with_dark_mode.png" alt="Register Dark Mode" width="100%"/></td>
+    <td><img src="src/assets/docs/screenshots/register_wihtout_dark_mode.png" alt="Register Light Mode" width="100%"/></td>
+  </tr>
+</table>
+
+### Forgot Password
+
+<table>
+  <tr>
+    <td align="center"><b>Dark Mode</b></td>
+    <td align="center"><b>Light Mode</b></td>
+  </tr>
+  <tr>
+    <td><img src="src/assets/docs/screenshots/forgot_password_with_dark_mode.png" alt="Forgot Password Dark" width="100%"/></td>
+    <td><img src="src/assets/docs/screenshots/forgot_password_without_dark_mode.png" alt="Forgot Password Light" width="100%"/></td>
+  </tr>
+</table>
+
+### AI Chat Interface
+
+<table>
+  <tr>
+    <td align="center"><b>Dark Mode — With Chat Data</b></td>
+    <td align="center"><b>Light Mode — With Chat Data</b></td>
+  </tr>
+  <tr>
+    <td><img src="src/assets/docs/screenshots/main_screen_with_data.png" alt="Chat Dark Mode" width="100%"/></td>
+    <td><img src="src/assets/docs/screenshots/main_screen_with_data_wihtou_dark.png" alt="Chat Light Mode" width="100%"/></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td align="center"><b>Chat Interface — Dark</b></td>
+    <td align="center"><b>Chat Interface — Light</b></td>
+  </tr>
+  <tr>
+    <td><img src="src/assets/docs/screenshots/chat_interface_with_dark.png" alt="Chat Interface Dark" width="100%"/></td>
+    <td><img src="src/assets/docs/screenshots/chat_interface_without_dark.png" alt="Chat Interface Light" width="100%"/></td>
+  </tr>
+</table>
+
+---
+
+## ⚙️ Environment Configuration
+
+All sensitive values are externalized as environment variables. The backend supports Spring profiles (`local`, `prod`).
 
 ### Backend Environment Variables
 
@@ -435,43 +488,42 @@ All sensitive values are externalized as environment variables. The backend supp
 | `DB_URL` | PostgreSQL JDBC URL | `jdbc:postgresql://neon.tech/aidb` |
 | `DB_USERNAME` | Database username | `aidb_user` |
 | `DB_PASSWORD` | Database password | `***` |
-| `JWT_SECRET` | HS256 signing secret (min 256-bit) | `your-secret-key` |
-| `JWT_EXPIRATION` | Token TTL in milliseconds | `86400000` (24h) |
+| `JWT_SECRET` | HS256 signing secret (min 256-bit) | `your-256bit-secret` |
+| `JWT_EXPIRATION` | Token TTL in milliseconds | `86400000` |
 | `MAIL_USERNAME` | SMTP sender email | `app@gmail.com` |
-| `MAIL_PASSWORD` | App-specific SMTP password | `***` |
-| `AI_API_URL` | OpenAI-compatible completions URL | `https://api.openai.com/v1/chat/completions` |
+| `MAIL_PASSWORD` | Gmail App Password | `***` |
+| `AI_API_URL` | OpenAI-compatible completions endpoint | `https://api.openai.com/v1/chat/completions` |
 | `AI_API_KEY` | LLM provider API key | `sk-...` |
 | `GOOGLE_CLIENT_ID` | Google OAuth2 client ID | `xxx.apps.googleusercontent.com` |
 | `GOOGLE_CLIENT_SECRET` | Google OAuth2 client secret | `***` |
-| `PORT` | Server port (Render auto-sets this) | `8080` |
+| `PORT` | Server port (Render sets automatically) | `8080` |
 
-### Frontend Environment Variables (Vercel)
+### Frontend Environment Variables
 
 | Variable | Description |
 |---|---|
-| `VITE_API_BASE_URL` | Backend base URL |
-| `VITE_OAUTH_REDIRECT_URI` | OAuth2 redirect URI for production |
+| `apiUrl` | Backend base URL (set in `environment.ts`) |
 
 ---
 
-## Local Development Setup
+## 🚀 Local Development Setup
 
 ### Prerequisites
 
 - Java 21+
 - Node.js 18+
-- Angular CLI 17+
-- PostgreSQL (local) or Neon account
+- Angular CLI 17 — `npm install -g @angular/cli`
 - Maven 3.9+
+- PostgreSQL (local) or a free [Neon](https://neon.tech) account
 
-### 1. Clone the repository
+### 1. Clone
 
 ```bash
 git clone https://github.com/Raman-8688/secure-ai-assistant.git
 cd secure-ai-assistant
 ```
 
-### 2. Configure backend
+### 2. Configure Backend
 
 Create `src/main/resources/application-local.properties`:
 
@@ -479,7 +531,7 @@ Create `src/main/resources/application-local.properties`:
 spring.datasource.url=jdbc:postgresql://localhost:5432/secureai
 spring.datasource.username=postgres
 spring.datasource.password=yourpassword
-jwt.secret=your-local-256-bit-secret
+jwt.secret=your-local-256-bit-secret-key-here
 jwt.expiration=86400000
 spring.mail.username=your@gmail.com
 spring.mail.password=your-app-password
@@ -489,7 +541,7 @@ spring.security.oauth2.client.registration.google.client-id=your-client-id
 spring.security.oauth2.client.registration.google.client-secret=your-client-secret
 ```
 
-### 3. Run backend
+### 3. Run Backend
 
 ```bash
 cd backend
@@ -497,7 +549,7 @@ mvn spring-boot:run -Dspring-boot.run.profiles=local
 # API available at http://localhost:8080
 ```
 
-### 4. Run frontend
+### 4. Run Frontend
 
 ```bash
 cd frontend
@@ -506,82 +558,124 @@ ng serve
 # App available at http://localhost:4200
 ```
 
-### 5. Run with Docker (backend only)
+### 5. Run via Docker
 
 ```bash
 docker build -t secure-ai-backend .
 docker run -p 8080:8080 \
   -e DB_URL=jdbc:postgresql://... \
   -e JWT_SECRET=... \
+  -e MAIL_USERNAME=... \
+  -e AI_API_KEY=... \
   secure-ai-backend
 ```
 
 ---
 
-## Deployment Architecture
+## ☁️ Deployment Architecture
 
+```mermaid
+graph LR
+    subgraph User ["👤 User"]
+        B[Browser]
+    end
+
+    subgraph Vercel ["▲ Vercel CDN"]
+        FE[Angular 17 Static Build]
+    end
+
+    subgraph Render ["🟢 Render"]
+        BE[Spring Boot — Docker Container]
+    end
+
+    subgraph Neon ["🐘 Neon"]
+        DB[(PostgreSQL Serverless)]
+    end
+
+    subgraph External ["🌍 External APIs"]
+        AI[OpenAI-compatible LLM]
+        G[Google OAuth2]
+        SMTP[Gmail SMTP]
+    end
+
+    B -- HTTPS --> FE
+    FE -- REST + JWT --> BE
+    BE -- JDBC/SSL --> DB
+    BE --> AI
+    BE --> G
+    BE --> SMTP
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                      PRODUCTION                             │
-│                                                             │
-│   ┌─────────────────┐         ┌──────────────────────────┐  │
-│   │   Vercel CDN    │         │   Render.com             │  │
-│   │                 │  HTTPS  │                          │  │
-│   │   Angular 17    │────────▶│   Docker Container       │  │
-│   │   Static Build  │         │   Spring Boot + Java 21  │  │
-│   │                 │         │   Port: 8080 (via $PORT) │  │
-│   └─────────────────┘         └────────────┬─────────────┘  │
-│                                            │                │
-│                                            │ JDBC/SSL        │
-│                                   ┌────────▼──────────┐     │
-│                                   │   Neon (Postgres) │     │
-│                                   │   Serverless DB   │     │
-│                                   └───────────────────┘     │
-│                                            │                │
-│                             ┌──────────────┴──────────┐     │
-│                             │  External Services       │     │
-│                             │  - Gmail SMTP            │     │
-│                             │  - Google OAuth2         │     │
-│                             │  - OpenAI API            │     │
-│                             └──────────────────────────┘     │
-└─────────────────────────────────────────────────────────────┘
-```
 
-**Render Deployment Notes:**
-- Backend is deployed as a Docker container using the included `Dockerfile`
-- `$PORT` environment variable is respected in `application.properties` via `${PORT:8080}`
-- OAuth2 redirect URI is configured to match the Render service URL in Google Cloud Console
+**Key deployment notes:**
 
-**Vercel Deployment Notes:**
-- Frontend is deployed from the Angular build output (`ng build --configuration production`)
-- OAuth2 callback and API base URL are configured via Vercel environment variables
-- `vercel.json` rewrites all routes to `index.html` for Angular routing
+- Backend runs as a Docker container on Render with `$PORT` auto-configured
+- Frontend is a static Angular build deployed to Vercel with SPA routing configured via `vercel.json`
+- OAuth2 redirect URI is registered in Google Cloud Console pointing to the Render service URL
+- All secrets are injected as environment variables — no hardcoded credentials anywhere
 
 ---
 
-## Screenshots
+## 🧗 Challenges Faced
 
-### Login Page
-> Dark mode — animated left panel with feature highlights, OAuth2 buttons, email/password form.
+| Challenge | How It Was Solved |
+|---|---|
+| JWT Integration with Spring Security 6 | Built a custom `JwtAuthenticationFilter` inserted before `UsernamePasswordAuthenticationFilter` |
+| OAuth2 Social Login | Implemented `CustomOAuth2UserService` + `OAuth2AuthenticationSuccessHandler` to generate JWT post-OAuth2 |
+| Email OTP Verification | Spring Mail + Gmail SMTP with App Password, OTP stored with expiry timestamp |
+| Render Docker Deployment | Fixed `ENTRYPOINT` syntax in `Dockerfile`, exposed `$PORT` via `application.properties` |
+| OAuth2 Redirect URI Mismatch | Maintained separate redirect URIs in Google Console for local and production environments |
+| CORS in Production | Configured allowed origins in `SecurityConfig` matching exact Vercel deployment URL |
+| OpenAI-compatible API Integration | Used `RestTemplate` with bearer auth, parsing `choices[0].message.content` from JSON response |
+| PostgreSQL on Neon | Configured JDBC SSL URL with correct driver and Hibernate dialect |
 
-### Register Page
-> Full registration with name, email, password, leading to OTP email verification.
+---
 
-### Forgot Password Page
-> Minimal, focused reset flow with back-to-login navigation.
+## 📚 What I Learned
 
-### Chat Interface
-> Sidebar with chat history, voice input button, dark/light theme toggle, AI response display.
+- Spring Security 6 filter chain and how to integrate stateless JWT into it
+- OAuth2 authorization code flow end-to-end (redirect → callback → JWT)
+- JWT token lifecycle: generation, signing (HS256), validation, expiry
+- OTP-based email verification patterns with time-limited tokens
+- REST API design with layered architecture (Controller → Service → Repository)
+- Spring profile-based environment configuration for local vs production
+- Docker containerization of a Spring Boot application
+- Cloud deployment: Vercel (frontend CDN) + Render (backend containers) + Neon (serverless DB)
+- Angular 17 standalone components, lazy-loaded routes, reactive forms
+- Angular HTTP interceptors for automatic JWT header injection
+- Web Speech API integration for voice-to-text input
+- CSS variable-based global theming (dark/light mode)
+
+---
+
+## 🔮 Future Enhancements
+
+| Enhancement | Priority |
+|---|---|
+| GitHub OAuth2 Login | High |
+| Streaming AI Responses (SSE) | High |
+| Markdown Rendering for AI output | High |
+| Redis Caching for session management | Medium |
+| Docker Compose for full-stack local setup | Medium |
+| Unit & Integration Testing (JUnit + Mockito) | Medium |
+| AI Conversation Export (PDF/TXT) | Medium |
+| Multiple AI Model Selection | Medium |
+| File Upload Support | Low |
+| CI/CD Pipeline (GitHub Actions) | Low |
+| Kubernetes Deployment | Low |
+| Rate Limiting on AI endpoints | Low |
 
 ---
 
 <div align="center">
 
-Built with dedication by **[Raman Boya](https://github.com/Raman-8688)**
+---
 
-[![GitHub](https://img.shields.io/badge/GitHub-Raman--8688-181717?style=flat-square&logo=github)](https://github.com/Raman-8688)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/ramanjaneyulu-boya)
+Built with dedication by **[Raman Boya](https://github.com/Raman-8688)** — Java Full Stack Developer, Hyderabad
 
-*Java Full Stack Developer — Hyderabad, India*
+[![GitHub](https://img.shields.io/badge/GitHub-Raman--8688-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Raman-8688)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/ramanjaneyulu-boya)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-10B981?style=flat-square&logo=vercel&logoColor=white)](https://github.com/Raman-8688/portfolio-projects)
+
+*If this project helped you, please consider giving it a ⭐*
 
 </div>
