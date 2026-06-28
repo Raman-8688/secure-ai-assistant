@@ -1,4 +1,4 @@
-// service/AuthService.java - Updated response messages
+// service/AuthService.java - Updated with SendGrid support
 package com.example.aiapp.aiapi.service;
 
 import com.example.aiapp.aiapi.dto.requests.*;
@@ -28,6 +28,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final EmailService emailService;
+    private final SendGridEmailService sendGridEmailService; // Add this
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Value("${app.reset.token.expiry.minutes:15}")
@@ -35,6 +36,9 @@ public class AuthService {
 
     @Value("${app.max.reset.attempts:5}")
     private int maxResetAttempts;
+
+    @Value("${app.email.provider:local}")
+    private String emailProvider;
 
     // ==================== REGISTRATION ====================
 
@@ -78,24 +82,22 @@ public class AuthService {
 
     @Async
     public void sendOtpEmailAsync(String email, String otp) {
-
         log.info("========== ASYNC METHOD START ==========");
         log.info("Email: {}", email);
+        log.info("Email Provider: {}", emailProvider);
 
         try {
-
-            log.info("Calling EmailService");
-
-            emailService.sendOtpEmail(email, otp);
-
+            if ("sendgrid".equalsIgnoreCase(emailProvider)) {
+                log.info("Using SendGrid for email sending");
+                sendGridEmailService.sendOtpEmail(email, otp);
+            } else {
+                log.info("Using local EmailService");
+                emailService.sendOtpEmail(email, otp);
+            }
             log.info("EmailService completed successfully");
-
         } catch (Exception e) {
-
             log.error("ASYNC ERROR", e);
-
         }
-
         log.info("========== ASYNC METHOD END ==========");
     }
 
@@ -215,9 +217,31 @@ public class AuthService {
         userRepository.updateResetToken(emailLower, resetToken, expiryTime, LocalDateTime.now());
         userRepository.incrementResetAttempts(emailLower);
 
-        emailService.sendPasswordResetEmail(user.getEmail(), resetToken);
+        // Send password reset email using the appropriate provider
+        sendPasswordResetEmailAsync(user.getEmail(), resetToken);
 
         return "Password reset link sent to your email. Please check your inbox.";
+    }
+
+    @Async
+    public void sendPasswordResetEmailAsync(String email, String resetToken) {
+        log.info("========== SENDING PASSWORD RESET ==========");
+        log.info("Email: {}", email);
+        log.info("Email Provider: {}", emailProvider);
+
+        try {
+            if ("sendgrid".equalsIgnoreCase(emailProvider)) {
+                log.info("Using SendGrid for password reset email");
+                sendGridEmailService.sendPasswordResetEmail(email, resetToken);
+            } else {
+                log.info("Using local EmailService for password reset email");
+                emailService.sendPasswordResetEmail(email, resetToken);
+            }
+            log.info("Password reset email completed successfully");
+        } catch (Exception e) {
+            log.error("ASYNC ERROR sending password reset email", e);
+        }
+        log.info("========== PASSWORD RESET SEND END ==========");
     }
 
     // ==================== RESET PASSWORD ====================
