@@ -1,13 +1,13 @@
 <div align="center">
 
-# 🤖 SecureAI Assistant
+# SecureAI Assistant
 
 ### Enterprise-grade AI Chat Platform built with Angular, Spring Boot, JWT Authentication, OAuth2, PostgreSQL and OpenAI.
 
 <br/>
 
 [![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/projects/jdk/21/)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Angular](https://img.shields.io/badge/Angular-17-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.io/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://neon.tech/)
 [![JWT](https://img.shields.io/badge/JWT-Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
@@ -27,38 +27,38 @@
 
 <br/>
 
-<img src="frontend/src/assets/docs/screenshots/main_screen_with_data.png" alt="SecureAI Assistant - Chat Interface" width="90%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);" />
+<img src="frontend/src/assets/docs/screenshots/main_screen_with_data.png" alt="SecureAI Assistant - Chat Interface" width="90%" />
 
 <br/><br/>
 
-**[🚀 Live Demo](https://secure-ai-assistant-roan.vercel.app)** &nbsp;·&nbsp; **[📖 API Docs](#api-reference)** &nbsp;·&nbsp; **[⭐ Give a Star](https://github.com/Raman-8688/secure-ai-assistant)**
+**[Live Demo](https://secure-ai-assistant-roan.vercel.app)** &nbsp;·&nbsp; **[API Docs](#api-reference)** &nbsp;·&nbsp; **[Give a Star](https://github.com/Raman-8688/secure-ai-assistant)**
 
 </div>
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [Why I Built This](#-why-i-built-this)
-- [Project Highlights](#-project-highlights)
-- [Feature Overview](#-feature-overview)
-- [Tech Stack](#-tech-stack)
-- [System Architecture](#-system-architecture)
-- [Authentication Flow](#-authentication-flow)
-- [Database Schema](#-database-schema)
-- [API Reference](#-api-reference)
-- [Project Structure](#-project-structure)
-- [Screenshots](#-screenshots)
-- [Environment Configuration](#-environment-configuration)
-- [Local Development Setup](#-local-development-setup)
-- [Deployment Architecture](#-deployment-architecture)
-- [Challenges Faced](#-challenges-faced)
-- [What I Learned](#-what-i-learned)
-- [Future Enhancements](#-future-enhancements)
+- [Why I Built This](#why-i-built-this)
+- [Project Highlights](#project-highlights)
+- [Feature Overview](#feature-overview)
+- [Tech Stack](#tech-stack)
+- [System Architecture](#system-architecture)
+- [Authentication Flow](#authentication-flow)
+- [Database Schema](#database-schema)
+- [API Reference](#api-reference)
+- [Project Structure](#project-structure)
+- [Screenshots](#screenshots)
+- [Environment Configuration](#environment-configuration)
+- [Local Development Setup](#local-development-setup)
+- [Deployment Architecture](#deployment-architecture)
+- [Challenges Faced](#challenges-faced)
+- [What I Learned](#what-i-learned)
+- [Future Enhancements](#future-enhancements)
 
 ---
 
-## 💡 Why I Built This
+## Why I Built This
 
 SecureAI Assistant was built to demonstrate how enterprise-grade authentication, AI integration, and cloud deployment can be combined into a production-ready full-stack application. Most student projects stop at CRUD — this one goes further.
 
@@ -68,7 +68,7 @@ Everything is deployed on real cloud infrastructure: Angular on Vercel CDN, Spri
 
 ---
 
-## ⭐ Project Highlights
+## Project Highlights
 
 | Capability | Detail |
 |---|---|
@@ -87,32 +87,32 @@ Everything is deployed on real cloud infrastructure: Angular on Vercel CDN, Spri
 
 ---
 
-## ✅ Feature Overview
+## Feature Overview
 
 | Feature | Status |
 |---|---|
-| JWT Authentication | ✅ Done |
-| Google OAuth2 Login | ✅ Done |
-| Email OTP Verification | ✅ Done |
-| Resend OTP | ✅ Done |
-| Forgot Password | ✅ Done |
-| Password Reset (Token) | ✅ Done |
-| AI Chat (Q&A) | ✅ Done |
-| Chat History (Save/View) | ✅ Done |
-| Delete Chat History | ✅ Done |
-| Voice Input | ✅ Done |
-| Dark Mode | ✅ Done |
-| Light Mode | ✅ Done |
-| Responsive Layout | ✅ Done |
-| Docker Containerization | ✅ Done |
-| Production Deployment | ✅ Done |
-| Environment Profiles | ✅ Done |
-| Global Error Handling | ✅ Done |
-| Auth Guard (Route Protection) | ✅ Done |
+| JWT Authentication | ✅ |
+| Google OAuth2 Login | ✅ |
+| Email OTP Verification | ✅ |
+| Resend OTP | ✅ |
+| Forgot Password | ✅ |
+| Password Reset (Token) | ✅ |
+| AI Chat (Q&A) | ✅ |
+| Chat History (Save / View) | ✅ |
+| Delete Chat History | ✅ |
+| Voice Input | ✅ |
+| Dark Mode | ✅ |
+| Light Mode | ✅ |
+| Responsive Layout | ✅ |
+| Docker Containerization | ✅ |
+| Production Deployment | ✅ |
+| Environment Profiles | ✅ |
+| Global Error Handling | ✅ |
+| Auth Guard (Route Protection) | ✅ |
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Layer | Technology | Purpose |
 |---|---|---|
@@ -135,11 +135,11 @@ Everything is deployed on real cloud infrastructure: Angular on Vercel CDN, Spri
 
 ---
 
-## 🏗 System Architecture
+## System Architecture
 
 ```mermaid
 graph TB
-    subgraph Client ["🌐 Client — Vercel CDN"]
+    subgraph Client ["Client — Vercel CDN"]
         A[Angular 17 SPA]
         A1[Login / Register]
         A2[Chat UI + Voice]
@@ -149,13 +149,13 @@ graph TB
         A --> A3
     end
 
-    subgraph Gateway ["🔒 API Gateway — Spring Security"]
+    subgraph Gateway ["API Gateway — Spring Security"]
         B[JwtAuthenticationFilter]
         B1[SecurityConfig + CORS]
         B --> B1
     end
 
-    subgraph App ["⚙️ Application Layer — Render Docker"]
+    subgraph App ["Application Layer — Render Docker"]
         C[AuthController /api/auth/**]
         D[AIController /api/ai/**]
         E[AuthService + JwtService]
@@ -166,12 +166,12 @@ graph TB
         E --> G
     end
 
-    subgraph Data ["🗄️ Data Layer — Neon PostgreSQL"]
+    subgraph Data ["Data Layer — Neon PostgreSQL"]
         H[(users table)]
         I[(chat_history table)]
     end
 
-    subgraph External ["🌍 External Services"]
+    subgraph External ["External Services"]
         J[OpenAI-compatible LLM API]
         K[Google OAuth2]
         L[Gmail SMTP]
@@ -189,7 +189,7 @@ graph TB
 
 ---
 
-## 🔐 Authentication Flow
+## Authentication Flow
 
 ### Registration + OTP Verification
 
@@ -238,7 +238,7 @@ sequenceDiagram
     FE->>FI: GET /api/ai/history [Authorization: Bearer token]
     FI->>FI: Validate JWT signature + expiry
     FI->>DB: Load UserDetails
-    FI->>BE: SecurityContext set → proceed
+    FI->>BE: SecurityContext set, proceed
     BE-->>FE: Protected resource
 ```
 
@@ -252,12 +252,12 @@ sequenceDiagram
     participant G as Google
     participant DB as PostgreSQL
 
-    U->>FE: Click "Continue with Google"
+    U->>FE: Click Continue with Google
     FE->>SS: Redirect to OAuth2 endpoint
     SS->>G: Authorization redirect
     G-->>U: Consent screen
     U->>G: Allow
-    G-->>SS: Auth code → /login/oauth2/code/google
+    G-->>SS: Auth code to /login/oauth2/code/google
     SS->>SS: CustomOAuth2UserService.loadUser()
     SS->>DB: Find or create user (emailVerified=true)
     SS->>SS: OAuth2AuthenticationSuccessHandler
@@ -268,9 +268,9 @@ sequenceDiagram
 
 ---
 
-## 🗄 Database Schema
+## Database Schema
 
-### `users` table
+### users table
 
 | Column | Type | Constraint | Notes |
 |---|---|---|---|
@@ -278,12 +278,12 @@ sequenceDiagram
 | name | VARCHAR | NOT NULL | Display name |
 | email | VARCHAR | NOT NULL, UNIQUE | Used as username |
 | password | VARCHAR | NULLABLE | Null for OAuth2 users |
-| role | VARCHAR | NOT NULL | Default: `USER` |
-| email_verified | BOOLEAN | NOT NULL | Default: `false` |
+| role | VARCHAR | NOT NULL | Default: USER |
+| email_verified | BOOLEAN | NOT NULL | Default: false |
 | verification_otp | VARCHAR | NULLABLE | 6-digit OTP |
 | otp_expiry_time | TIMESTAMP | NULLABLE | OTP expiration |
-| created_at | TIMESTAMP | NOT NULL | Set via `@PrePersist` |
-| provider | VARCHAR | NULLABLE | `google` or null |
+| created_at | TIMESTAMP | NOT NULL | Set via @PrePersist |
+| provider | VARCHAR | NULLABLE | google or null |
 | provider_id | VARCHAR | NULLABLE | OAuth2 provider user ID |
 | last_login | TIMESTAMP | NULLABLE | Updated on login |
 | reset_token | VARCHAR | NULLABLE | UUID for password reset |
@@ -292,7 +292,7 @@ sequenceDiagram
 | password_reset_attempts | INTEGER | NULLABLE | Rate limiting counter |
 | reset_token_generated_at | TIMESTAMP | NULLABLE | Rate limiting timestamp |
 
-### `chat_history` table
+### chat_history table
 
 | Column | Type | Constraint | Notes |
 |---|---|---|---|
@@ -304,7 +304,7 @@ sequenceDiagram
 
 ---
 
-## 📡 API Reference
+## API Reference
 
 ### Authentication Endpoints
 
@@ -329,88 +329,88 @@ sequenceDiagram
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 secure-ai-assistant/
 │
-├── 📂 backend/                          Spring Boot (Java 21)
+├── backend/                             Spring Boot (Java 21)
 │   └── src/main/java/.../aiapi/
-│       ├── 📂 config/
-│       │   ├── SecurityConfig.java       Spring Security, CORS, filter chain
-│       │   ├── JwtAuthenticationFilter   JWT extraction & validation
-│       │   ├── OAuth2SuccessHandler      Post-OAuth2 JWT generation
-│       │   └── PasswordEncoderConfig     BCrypt bean
+│       ├── config/
+│       │   ├── SecurityConfig.java      Spring Security, CORS, filter chain
+│       │   ├── JwtAuthenticationFilter  JWT extraction and validation
+│       │   ├── OAuth2SuccessHandler     Post-OAuth2 JWT generation
+│       │   └── PasswordEncoderConfig    BCrypt bean
 │       │
-│       ├── 📂 controller/
-│       │   ├── AuthController            /api/auth/** endpoints
-│       │   └── AIController              /api/ai/** endpoints
+│       ├── controller/
+│       │   ├── AuthController           /api/auth/** endpoints
+│       │   └── AIController             /api/ai/** endpoints
 │       │
-│       ├── 📂 service/
-│       │   ├── AuthService               Registration, login, OTP, reset logic
-│       │   ├── JwtService                Token generation & validation
-│       │   ├── AIService                 OpenAI API REST client
-│       │   ├── EmailService              Email abstraction interface
-│       │   ├── SendGridEmailService      SMTP implementation (Gmail)
-│       │   └── CustomOAuth2UserService   OAuth2 user loading & DB sync
+│       ├── service/
+│       │   ├── AuthService              Registration, login, OTP, reset logic
+│       │   ├── JwtService               Token generation and validation
+│       │   ├── AIService                OpenAI API REST client
+│       │   ├── EmailService             Email abstraction interface
+│       │   ├── SendGridEmailService     SMTP implementation (Gmail)
+│       │   └── CustomOAuth2UserService  OAuth2 user loading and DB sync
 │       │
-│       ├── 📂 entity/
-│       │   ├── User.java                 users table mapping
-│       │   └── ChatHistory.java          chat_history table mapping
+│       ├── entity/
+│       │   ├── User.java                users table mapping
+│       │   └── ChatHistory.java         chat_history table mapping
 │       │
-│       ├── 📂 repository/
-│       │   ├── UserRepository            JPA queries for users
-│       │   └── ChatHistoryRepository     Chat data access + ordering
+│       ├── repository/
+│       │   ├── UserRepository           JPA queries for users
+│       │   └── ChatHistoryRepository    Chat data access and ordering
 │       │
-│       ├── 📂 dto/
-│       │   ├── requests/                 RegisterRequest, LoginRequest, etc.
-│       │   └── response/                 AuthResponse, AIResponse, etc.
+│       ├── dto/
+│       │   ├── requests/                RegisterRequest, LoginRequest, etc.
+│       │   └── response/                AuthResponse, AIResponse, etc.
 │       │
-│       ├── 📂 exception/
-│       │   ├── GlobalExceptionHandler    @ControllerAdvice error handling
-│       │   └── ErrorResponse             Structured error payload
+│       ├── exception/
+│       │   ├── GlobalExceptionHandler   @ControllerAdvice error handling
+│       │   └── ErrorResponse            Structured error payload
 │       │
-│       └── 📂 resources/
-│           ├── application.properties    Main config (env-var based)
-│           ├── application-local.props   Local dev profile
-│           └── application-prod.props    Production profile
+│       └── resources/
+│           ├── application.properties   Main config (env-var based)
+│           ├── application-local.props  Local dev profile
+│           └── application-prod.props   Production profile
 │
-├── 📂 frontend/                          Angular 17 (Standalone Components)
+├── frontend/                            Angular 17 (Standalone Components)
 │   └── src/app/
-│       ├── 📂 core/
-│       │   ├── guards/auth.guard.ts      Route protection (JWT check)
-│       │   ├── interceptors/             JWT header injection + error handling
-│       │   ├── models/                   TypeScript interfaces
+│       ├── core/
+│       │   ├── guards/auth.guard.ts     Route protection (JWT check)
+│       │   ├── interceptors/            JWT header injection + error handling
+│       │   ├── models/                  TypeScript interfaces
 │       │   └── services/
-│       │       ├── auth.service.ts       Auth API calls + JWT storage
-│       │       ├── ai.service.ts         Chat API calls + history
-│       │       └── theme.service.ts      Dark/light theme management
+│       │       ├── auth.service.ts      Auth API calls + JWT storage
+│       │       ├── ai.service.ts        Chat API calls + history
+│       │       └── theme.service.ts     Dark/light theme management
 │       │
-│       ├── 📂 features/
+│       ├── features/
 │       │   ├── auth/
-│       │   │   ├── login/                Login form + OAuth2 buttons
-│       │   │   ├── register/             Registration form
-│       │   │   ├── verify-email/         OTP entry screen
-│       │   │   ├── forgot-password/      Reset request form
-│       │   │   ├── reset-password/       New password form
-│       │   │   └── callback/             OAuth2 redirect handler
-│       │   ├── chat-ui/                  Main chat page + history sidebar
+│       │   │   ├── login/               Login form + OAuth2 buttons
+│       │   │   ├── register/            Registration form
+│       │   │   ├── verify-email/        OTP entry screen
+│       │   │   ├── forgot-password/     Reset request form
+│       │   │   ├── reset-password/      New password form
+│       │   │   └── callback/            OAuth2 redirect handler
+│       │   ├── chat-ui/                 Main chat page + history sidebar
 │       │   └── components/
-│       │       ├── chat-input/           Voice + text input component
-│       │       ├── chat-message/         Message bubble component
-│       │       └── markdown-renderer/    AI response markdown display
+│       │       ├── chat-input/          Voice + text input component
+│       │       ├── chat-message/        Message bubble component
+│       │       └── markdown-renderer/   AI response markdown display
 │       │
-│       └── 📂 shared/
-│           └── components/auth-layout/   Shared two-panel auth layout
+│       └── shared/
+│           └── components/auth-layout/  Shared two-panel auth layout
 │
-├── 📂 src/assets/docs/screenshots/       All UI screenshots
-├── Dockerfile                            Backend Docker configuration
+├── frontend/src/assets/docs/screenshots/   All UI screenshots
+├── Dockerfile                           Backend Docker configuration
 └── README.md
 ```
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 ### Login Page
 
@@ -477,7 +477,7 @@ secure-ai-assistant/
 
 ---
 
-## ⚙️ Environment Configuration
+## Environment Configuration
 
 All sensitive values are externalized as environment variables. The backend supports Spring profiles (`local`, `prod`).
 
@@ -506,7 +506,7 @@ All sensitive values are externalized as environment variables. The backend supp
 
 ---
 
-## 🚀 Local Development Setup
+## Local Development Setup
 
 ### Prerequisites
 
@@ -572,27 +572,27 @@ docker run -p 8080:8080 \
 
 ---
 
-## ☁️ Deployment Architecture
+## Deployment Architecture
 
 ```mermaid
 graph LR
-    subgraph User ["👤 User"]
+    subgraph User ["User"]
         B[Browser]
     end
 
-    subgraph Vercel ["▲ Vercel CDN"]
+    subgraph Vercel ["Vercel CDN"]
         FE[Angular 17 Static Build]
     end
 
-    subgraph Render ["🟢 Render"]
+    subgraph Render ["Render"]
         BE[Spring Boot — Docker Container]
     end
 
-    subgraph Neon ["🐘 Neon"]
+    subgraph Neon ["Neon"]
         DB[(PostgreSQL Serverless)]
     end
 
-    subgraph External ["🌍 External APIs"]
+    subgraph External ["External APIs"]
         AI[OpenAI-compatible LLM]
         G[Google OAuth2]
         SMTP[Gmail SMTP]
@@ -606,7 +606,7 @@ graph LR
     BE --> SMTP
 ```
 
-**Key deployment notes:**
+Key deployment notes:
 
 - Backend runs as a Docker container on Render with `$PORT` auto-configured
 - Frontend is a static Angular build deployed to Vercel with SPA routing configured via `vercel.json`
@@ -615,7 +615,7 @@ graph LR
 
 ---
 
-## 🧗 Challenges Faced
+## Challenges Faced
 
 | Challenge | How It Was Solved |
 |---|---|
@@ -630,13 +630,13 @@ graph LR
 
 ---
 
-## 📚 What I Learned
+## What I Learned
 
 - Spring Security 6 filter chain and how to integrate stateless JWT into it
-- OAuth2 authorization code flow end-to-end (redirect → callback → JWT)
+- OAuth2 authorization code flow end-to-end (redirect to callback to JWT)
 - JWT token lifecycle: generation, signing (HS256), validation, expiry
 - OTP-based email verification patterns with time-limited tokens
-- REST API design with layered architecture (Controller → Service → Repository)
+- REST API design with layered architecture (Controller, Service, Repository)
 - Spring profile-based environment configuration for local vs production
 - Docker containerization of a Spring Boot application
 - Cloud deployment: Vercel (frontend CDN) + Render (backend containers) + Neon (serverless DB)
@@ -647,7 +647,7 @@ graph LR
 
 ---
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 | Enhancement | Priority |
 |---|---|
@@ -656,7 +656,7 @@ graph LR
 | Markdown Rendering for AI output | High |
 | Redis Caching for session management | Medium |
 | Docker Compose for full-stack local setup | Medium |
-| Unit & Integration Testing (JUnit + Mockito) | Medium |
+| Unit and Integration Testing (JUnit + Mockito) | Medium |
 | AI Conversation Export (PDF/TXT) | Medium |
 | Multiple AI Model Selection | Medium |
 | File Upload Support | Low |
@@ -668,14 +668,10 @@ graph LR
 
 <div align="center">
 
----
-
-Built with dedication by **[Raman Boya](https://github.com/Raman-8688)** — Java Full Stack Developer, Hyderabad
+Built by **[Raman Boya](https://github.com/Raman-8688)** — Java Full Stack Developer, Hyderabad
 
 [![GitHub](https://img.shields.io/badge/GitHub-Raman--8688-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Raman-8688)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/ramanjaneyulu-boya)
 [![Portfolio](https://img.shields.io/badge/Portfolio-Visit-10B981?style=flat-square&logo=vercel&logoColor=white)](https://github.com/Raman-8688/portfolio-projects)
-
-*If this project helped you, please consider giving it a ⭐*
 
 </div>
