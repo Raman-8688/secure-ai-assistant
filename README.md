@@ -27,7 +27,7 @@
 
 <br/>
 
-<img src="src/assets/docs/screenshots/main_screen_with_data.png" alt="SecureAI Assistant - Chat Interface" width="90%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);" />
+<img src="frontend/src/assets/docs/screenshots/main_screen_with_data.png" alt="SecureAI Assistant - Chat Interface" width="90%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);" />
 
 <br/><br/>
 
@@ -420,8 +420,8 @@ secure-ai-assistant/
     <td align="center"><b>Light Mode</b></td>
   </tr>
   <tr>
-    <td><img src="src/assets/docs/screenshots/login_wiht_darkmode.png" alt="Login Dark Mode" width="100%"/></td>
-    <td><img src="src/assets/docs/screenshots/login_without_dark_mode.png" alt="Login Light Mode" width="100%"/></td>
+    <td><img src="frontend/src/assets/docs/screenshots/login_with_darkmode.png" alt="Login Dark Mode" width="100%"/></td>
+    <td><img src="frontend/src/assets/docs/screenshots/login_without_dark_mode.png" alt="Login Light Mode" width="100%"/></td>
   </tr>
 </table>
 
@@ -433,8 +433,8 @@ secure-ai-assistant/
     <td align="center"><b>Light Mode</b></td>
   </tr>
   <tr>
-    <td><img src="src/assets/docs/screenshots/register_with_dark_mode.png" alt="Register Dark Mode" width="100%"/></td>
-    <td><img src="src/assets/docs/screenshots/register_wihtout_dark_mode.png" alt="Register Light Mode" width="100%"/></td>
+    <td><img src="frontend/src/assets/docs/screenshots/register_with_dark_mode.png" alt="Register Dark Mode" width="100%"/></td>
+    <td><img src="frontend/src/assets/docs/screenshots/register_wihtout_dark_mode.png" alt="Register Light Mode" width="100%"/></td>
   </tr>
 </table>
 
@@ -446,8 +446,8 @@ secure-ai-assistant/
     <td align="center"><b>Light Mode</b></td>
   </tr>
   <tr>
-    <td><img src="src/assets/docs/screenshots/forgot_password_with_dark_mode.png" alt="Forgot Password Dark" width="100%"/></td>
-    <td><img src="src/assets/docs/screenshots/forgot_password_without_dark_mode.png" alt="Forgot Password Light" width="100%"/></td>
+    <td><img src="frontend/src/assets/docs/screenshots/forgot_password_with_dark_mode.png" alt="Forgot Password Dark" width="100%"/></td>
+    <td><img src="frontend/src/assets/docs/screenshots/forgot_password_without_dark_mode.png" alt="Forgot Password Light" width="100%"/></td>
   </tr>
 </table>
 
@@ -459,8 +459,8 @@ secure-ai-assistant/
     <td align="center"><b>Light Mode — With Chat Data</b></td>
   </tr>
   <tr>
-    <td><img src="src/assets/docs/screenshots/main_screen_with_data.png" alt="Chat Dark Mode" width="100%"/></td>
-    <td><img src="src/assets/docs/screenshots/main_screen_with_data_wihtou_dark.png" alt="Chat Light Mode" width="100%"/></td>
+    <td><img src="frontend/src/assets/docs/screenshots/main_screen_with_data.png" alt="Chat Dark Mode" width="100%"/></td>
+    <td><img src="frontend/src/assets/docs/screenshots/main_screen_with_data_without_dark.png" alt="Chat Light Mode" width="100%"/></td>
   </tr>
 </table>
 
@@ -470,8 +470,8 @@ secure-ai-assistant/
     <td align="center"><b>Chat Interface — Light</b></td>
   </tr>
   <tr>
-    <td><img src="src/assets/docs/screenshots/chat_interface_with_dark.png" alt="Chat Interface Dark" width="100%"/></td>
-    <td><img src="src/assets/docs/screenshots/chat_interface_without_dark.png" alt="Chat Interface Light" width="100%"/></td>
+    <td><img src="frontend/src/assets/docs/screenshots/chat_interface_with_dark.png" alt="Chat Interface Dark" width="100%"/></td>
+    <td><img src="frontend/src/assets/docs/screenshots/chat_interface_without_dark.png" alt="Chat Interface Light" width="100%"/></td>
   </tr>
 </table>
 
