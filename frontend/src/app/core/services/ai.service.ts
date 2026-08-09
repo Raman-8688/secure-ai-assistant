@@ -15,8 +15,8 @@ export class AiService {
 
   constructor(private http: HttpClient) {}
 
-  askQuestion(question: string): Observable<AIResponse> {
-    const request: AIRequest = { question };
+  askQuestion(question: string, model?: string): Observable<AIResponse> {
+    const request: AIRequest = { question, model };
     return this.http.post<AIResponse>(`${this.baseUrl}/ask`, request);
   }
 

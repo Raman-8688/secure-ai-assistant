@@ -29,6 +29,13 @@
     </div>
 
     <div class="header-actions">
+      <!-- Model Selector -->
+      <div class="model-selector-wrapper">
+        <span class="model-label">🤖</span>
+        <select class="model-select" [(ngModel)]="selectedModel" title="Select AI Model">
+          <option *ngFor="let m of availableModels" [value]="m.id">{{ m.name }}</option>
+        </select>
+      </div>
       <!-- Theme toggle -->
       <button class="theme-toggle" type="button"
         (click)="toggleTheme()"

@@ -3,6 +3,7 @@ import {
   OnInit, OnDestroy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AiService } from '../../core/services/ai.service';
 import { NetworkService } from '../../core/services/network.service';
 import { ChatMessageComponent, Message } from '../components/chat-message/chat-message.component';
@@ -16,7 +17,7 @@ import { ThemeService } from '../../core/services/theme.service';
 @Component({
   selector: 'app-chat-ui',
   standalone: true,
-  imports: [CommonModule, ChatMessageComponent, ChatInputComponent],
+  imports: [CommonModule, FormsModule, ChatMessageComponent, ChatInputComponent],
   templateUrl: './chat-ui.component.html',
   styleUrls: ['./chat-ui.component.css'],
 })
@@ -26,6 +27,15 @@ export class ChatUiComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
   isLoading = false;
   isLoadingHistory = false;
+
+  availableModels = [
+    { id: 'meta/llama-3.1-8b-instruct', name: 'Llama 3.1 8B (Fast & Verified Working)' },
+    { id: 'meta/llama-3.3-70b-instruct', name: 'Llama 3.3 70B (High Intelligence)' },
+    { id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek R1 (Reasoning AI)' },
+    { id: 'mistralai/mistral-large-2-instruct', name: 'Mistral Large 2' },
+    { id: 'google/gemma-2-9b-it', name: 'Google Gemma 2 9B' }
+  ];
+  selectedModel: string = 'meta/llama-3.1-8b-instruct';
 
   toastMessage = '';
   toastType: 'error' | 'warning' | 'info' = 'error';
@@ -106,7 +116,7 @@ export class ChatUiComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     const typingId = this.addTypingIndicator();
 
-    this.aiService.askQuestion(question).subscribe({
+    this.aiService.askQuestion(question, this.selectedModel).subscribe({
       next: (response: any) => {
         this.removeTypingIndicator(typingId);
         this.addBotMessage(response.answer || 'No response received.');
