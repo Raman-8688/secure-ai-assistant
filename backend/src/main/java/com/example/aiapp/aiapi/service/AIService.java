@@ -2,6 +2,7 @@ package com.example.aiapp.aiapi.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -17,88 +18,54 @@ public class AIService {
     @Value("${ai.api.key}")
     private String apiKey;
 
-    @Value("${ai.api.url}")  // ← ADD THIS
+    @Value("${ai.api.url}")
     private String apiUrl;
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper mapper = new ObjectMapper();
 
-   /** public String getAIResponse(String prompt) {
-        String url = "https://router.huggingface.co/v1/chat/completions";//wokring one
-
-
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(apiKey);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        Map<String, Object> body = Map.of(
-                "model", "openai/gpt-oss-120b:fastest",
-                "stream", false,
-                "messages", List.of(
-                        Map.of("role", "user", "content", prompt)
-                )
-        );
-
-        try {
-            HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-
-            ResponseEntity<String> response = restTemplate.exchange(
-                    url,
-                    HttpMethod.POST,
-                    entity,
-                    String.class
-            );
-
-            JsonNode root = mapper.readTree(response.getBody());
-
-            return root
-                    .path("choices")
-                    .get(0)
-                    .path("message")
-                    .path("content")
-                    .asText();
-
-        } catch (RestClientResponseException ex) {
-            return "Hugging Face API Error: " + ex.getStatusCode()
-                    + "\n" + ex.getResponseBodyAsString();
-        } catch (Exception ex) {
-            return "Application Error: " + ex.getMessage();
-        }
+    @PostConstruct
+    public void init() {
+        System.out.println("=================================================");
+        System.out.println(">>> DEBUG: SPRING BOOT LOADED AI CONFIGURATION:");
+        System.out.println(">>> AI_API_URL = " + apiUrl);
+        System.out.println(">>> AI_API_KEY = " + (apiKey != null && apiKey.length() > 10 ? apiKey.substring(0, 10) + "..." : apiKey));
+        System.out.println("=================================================");
     }
-    **/
-
-
-
-
-    /**
-     * AI added to the deep
-     * Map<String, Object> body = Map.of(
-     *     "model", "gpt-3.5-turbo-16k",  // Alternative 1
-     *     // "model", "gpt-4o-mini",     // Alternative 2
-     *     // "model", "gpt-4",           // Alternative 3
-     *     "messages", List.of(...)
-     * );
-     * @param prompt
-     * @return
-     */
-
-
 
    public String getAIResponse(String prompt) {
-       // Use the URL from properties
-       String url = apiUrl;  // ← CHANGE THIS from hardcoded URL
+       return getAIResponse(prompt, "meta/llama-3.1-8b-instruct");
+   }
+
+   public String getAIResponse(String prompt, String model) {
+       String url = apiUrl;
+       String key = apiKey;
+
+       // Safety Check & Logging
+       if (url == null || url.isBlank() || url.contains("chatanywhere")) {
+           url = "https://integrate.api.nvidia.com/v1/chat/completions";
+       }
+
+       if (key == null || key.isBlank()) {
+           return "Application Error: AI_API_KEY configuration is missing. Please configure AI_API_KEY in secrets.properties or system environment variables.";
+       }
+
+       String modelToUse = (model != null && !model.isBlank()) ? model : "meta/llama-3.1-8b-instruct";
+       System.out.println(">>> [AIService Executing Request] Endpoint: " + url + " | Model: " + modelToUse + " | Key: " + (key.length() > 10 ? key.substring(0, 10) + "..." : key));
 
        HttpHeaders headers = new HttpHeaders();
-       headers.setBearerAuth(apiKey);
+       headers.setBearerAuth(key);
        headers.setContentType(MediaType.APPLICATION_JSON);
+       headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-       // Update to OpenAI-compatible format
        Map<String, Object> body = Map.of(
-               "model", "gpt-3.5-turbo",  // or "gpt-4o-mini" for better quality   gpt-3.5-turbo-16k
+               "model", modelToUse,
                "messages", List.of(
                        Map.of("role", "user", "content", prompt)
-               )
+               ),
+               "max_tokens", 1024,
+               "temperature", 0.7,
+               "stream", false
        );
 
        try {
@@ -113,15 +80,18 @@ public class AIService {
 
            JsonNode root = mapper.readTree(response.getBody());
 
-           return root
-                   .path("choices")
-                   .get(0)
-                   .path("message")
-                   .path("content")
-                   .asText();
+           if (root.has("choices") && root.path("choices").isArray() && root.path("choices").size() > 0) {
+               JsonNode firstChoice = root.path("choices").get(0);
+               JsonNode messageNode = firstChoice.path("message");
+               if (messageNode.has("content") && !messageNode.path("content").isNull()) {
+                   return messageNode.path("content").asText();
+               }
+           }
+
+           return "AI Response: " + response.getBody();
 
        } catch (RestClientResponseException ex) {
-           return "API Error: " + ex.getStatusCode() + "\n" + ex.getResponseBodyAsString();
+           return "API Error (" + ex.getStatusCode() + "): " + ex.getResponseBodyAsString();
        } catch (Exception ex) {
            return "Application Error: " + ex.getMessage();
        }

@@ -29,12 +29,13 @@ public class AIController {
             Authentication authentication) {
         try {
             String question = body.get("question");
+            String model = body.getOrDefault("model", "meta/llama-3.1-8b-instruct");
             if (question == null || question.isBlank()) {
                 return ResponseEntity.badRequest().body(Map.of("error", "Question cannot be empty"));
             }
 
-            // Use your existing AIService method - changed to getAIResponse
-            String answer = aiService.getAIResponse(question);
+            // Use AIService with dynamic model selection
+            String answer = aiService.getAIResponse(question, model);
 
             // Save to history (use email from JWT)
             String email = authentication.getName();
