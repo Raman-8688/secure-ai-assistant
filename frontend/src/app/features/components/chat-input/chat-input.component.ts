@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, OnDestroy, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 // Extend Window to include SpeechRecognition
 declare global {
@@ -13,7 +14,7 @@ declare global {
 @Component({
   selector: 'app-chat-input',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './chat-input.component.html',
   styleUrls: ['./chat-input.component.css'],
 })

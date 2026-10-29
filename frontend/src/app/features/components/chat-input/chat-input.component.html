@@ -6,21 +6,19 @@
       [(ngModel)]="question"
       (input)="autoResize(messageInput)"
       (keydown.enter)="handleEnter($event, messageInput)"
-      placeholder="Ask anything"
+      placeholder="Ask anything..."
       rows="1"
       [disabled]="isLoading"
     ></textarea>
 
     <div class="input-actions">
-      <button class="plus-btn" type="button" title="Attach">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-        </svg>
+      <button class="plus-btn" type="button" title="Attach file">
+        <mat-icon>add</mat-icon>
       </button>
 
       <div class="right-actions">
 
-        <!-- Mic button — shows ripple animation when listening -->
+        <!-- Mic button with listening animation -->
         <button
           class="mic-btn"
           [class.mic-btn--active]="isListening"
@@ -34,13 +32,8 @@
           <span class="mic-ring mic-ring--1" *ngIf="isListening"></span>
           <span class="mic-ring mic-ring--2" *ngIf="isListening"></span>
 
-          <!-- Mic icon -->
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-            <line x1="12" y1="19" x2="12" y2="23"/>
-            <line x1="8" y1="23" x2="16" y2="23"/>
-          </svg>
+          <!-- Material Mic icon -->
+          <mat-icon>{{ isListening ? 'mic_off' : 'mic' }}</mat-icon>
         </button>
 
         <!-- Send button -->
@@ -51,10 +44,7 @@
           [disabled]="!question.trim() || isLoading"
           title="Send message"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13"/>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-          </svg>
+          <mat-icon>arrow_upward</mat-icon>
         </button>
 
       </div>
@@ -72,11 +62,11 @@
 
   <!-- Error toast -->
   <div class="mic-error-toast" *ngIf="micError">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-    </svg>
-    {{ micError }}
-    <button class="error-close" type="button" (click)="micError = ''">✕</button>
+    <mat-icon>error_outline</mat-icon>
+    <span>{{ micError }}</span>
+    <button class="error-close" type="button" (click)="micError = ''">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 
   <p class="footer-note">Mini AI can make mistakes. Check important info.</p>

@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { AiService } from '../../core/services/ai.service';
 import { NetworkService } from '../../core/services/network.service';
 import { ChatMessageComponent, Message } from '../components/chat-message/chat-message.component';
@@ -17,7 +18,7 @@ import { ThemeService } from '../../core/services/theme.service';
 @Component({
   selector: 'app-chat-ui',
   standalone: true,
-  imports: [CommonModule, FormsModule, ChatMessageComponent, ChatInputComponent],
+  imports: [CommonModule, FormsModule, MatIconModule, ChatMessageComponent, ChatInputComponent],
   templateUrl: './chat-ui.component.html',
   styleUrls: ['./chat-ui.component.css'],
 })
