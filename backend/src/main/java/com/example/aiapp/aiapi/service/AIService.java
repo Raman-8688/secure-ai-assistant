@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class AIService {
@@ -33,6 +34,13 @@ public class AIService {
     // Previous NVIDIA NIM endpoint (kept for reference):
     // https://integrate.api.nvidia.com/v1/chat/completions
     // =========================================================================
+
+    private static final Set<String> SUPPORTED_GROQ_MODELS = Set.of(
+            "llama-3.3-70b-versatile",
+            "openai/gpt-oss-120b",
+            "openai/gpt-oss-20b",
+            "qwen/qwen3.8-27b"
+    );
 
     @PostConstruct
     public void init() {
@@ -69,24 +77,27 @@ public class AIService {
         }
 
         // Determine model to use
-        String modelToUse = (model != null && !model.isBlank()) ? model : "llama-3.3-70b-versatile";
+        String modelToUse = model;
 
         // Previous NVIDIA model fallback (kept for reference):
         // String modelToUse = (model != null && !model.isBlank()) ? model : "meta/llama-3.1-8b-instruct";
 
-        // Map any legacy or deprecated model IDs to active Groq equivalents to prevent 410/404 errors
+        // Bulletproof model resolution for Groq
         if (url.contains("groq.com")) {
-            if (modelToUse.contains("llama-3.1-8b")) {
-                modelToUse = "llama-3.1-8b-instant";
-            } else if (modelToUse.contains("llama-3.3-70b") || modelToUse.contains("llama-3")) {
+            if (modelToUse != null && SUPPORTED_GROQ_MODELS.contains(modelToUse.trim())) {
+                modelToUse = modelToUse.trim();
+            } else if (modelToUse != null && (modelToUse.contains("120b") || modelToUse.contains("gpt-oss-120b"))) {
+                modelToUse = "openai/gpt-oss-120b";
+            } else if (modelToUse != null && (modelToUse.contains("20b") || modelToUse.contains("gpt-oss-20b"))) {
+                modelToUse = "openai/gpt-oss-20b";
+            } else if (modelToUse != null && modelToUse.toLowerCase().contains("qwen")) {
+                modelToUse = "qwen/qwen3.8-27b";
+            } else {
+                // Guaranteed 100% working flagship model on Groq:
                 modelToUse = "llama-3.3-70b-versatile";
-            } else if (modelToUse.contains("gemma")) {
-                modelToUse = "gemma2-9b-it";
-            } else if (modelToUse.contains("deepseek")) {
-                modelToUse = "deepseek-r1-distill-llama-70b";
-            } else if (modelToUse.contains("mistral")) {
-                modelToUse = "mixtral-8x7b-32768";
             }
+        } else if (modelToUse == null || modelToUse.isBlank()) {
+            modelToUse = "llama-3.3-70b-versatile";
         }
 
         System.out.println(">>> [AIService Executing Request] Endpoint: " + url + " | Model: " + modelToUse + " | Key: " + (key.length() > 10 ? key.substring(0, 10) + "..." : key));

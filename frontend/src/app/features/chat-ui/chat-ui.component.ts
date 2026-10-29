@@ -28,13 +28,12 @@ export class ChatUiComponent implements OnInit, OnDestroy {
   isLoading = false;
   isLoadingHistory = false;
 
-  // Active Groq Models (Ultra-fast, high reliability, free forever)
+  // Active production Groq models (High speed, zero cold starts, completely free)
   availableModels = [
-    { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B (High Intelligence & Fast)' },
-    { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B (Ultra Fast)' },
-    { id: 'deepseek-r1-distill-llama-70b', name: 'DeepSeek R1 Distill 70B (Reasoning)' },
-    { id: 'mixtral-8x7b-32768', name: 'Mixtral 8x7B (High Context)' },
-    { id: 'gemma2-9b-it', name: 'Google Gemma 2 9B' }
+    { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B (Fast & Smart)' },
+    { id: 'openai/gpt-oss-120b', name: 'GPT-OSS 120B (High Reasoning)' },
+    { id: 'openai/gpt-oss-20b', name: 'GPT-OSS 20B (Ultra Fast)' },
+    { id: 'qwen/qwen3.8-27b', name: 'Qwen 3.8 27B (Code & General)' }
   ];
   selectedModel: string = 'llama-3.3-70b-versatile';
 
@@ -82,7 +81,7 @@ export class ChatUiComponent implements OnInit, OnDestroy {
     });
 
     this.loadHistory();
-    this.addBotMessage("Hello! I'm your AI assistant. Ask me anything about programming, technology, or general knowledge.");
+    this.startNewChat();
   }
 
   ngOnDestroy(): void {
@@ -91,6 +90,12 @@ export class ChatUiComponent implements OnInit, OnDestroy {
 
   toggleTheme(): void {
     this.themeService.toggle();
+  }
+
+  startNewChat(): void {
+    this.messages = [];
+    this.messageId = 0;
+    this.addBotMessage("Hello! I'm your AI assistant powered by Groq. Ask me anything about programming, technology, or general knowledge.");
   }
 
   loadHistory(): void {
@@ -106,7 +111,10 @@ export class ChatUiComponent implements OnInit, OnDestroy {
     this.messageId = 0;
     this.addUserMessage(item.question);
     this.addBotMessage(item.answer);
-    this.showHistory = false;
+    // On small screens, close the sidebar after selecting a chat
+    if (window.innerWidth < 768) {
+      this.showHistory = false;
+    }
   }
 
   deleteHistoryItem(id: number, event: Event): void {

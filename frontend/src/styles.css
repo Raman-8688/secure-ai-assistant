@@ -35,6 +35,10 @@ html, body {
   --bg-input: rgba(255, 255, 255, 0.04);
   --bg-hover: rgba(255, 255, 255, 0.06);
 
+  --sidebar-bg: #0d1117;
+  --chat-bg: #0a0d14;
+  --header-bg: #111622;
+
   /* Borders */
   --border-subtle: rgba(255, 255, 255, 0.06);
   --border-default: rgba(255, 255, 255, 0.09);
@@ -92,6 +96,10 @@ html, body {
   --bg-card: #ffffff;
   --bg-input: #f1f3f5;
   --bg-hover: rgba(0, 0, 0, 0.04);
+
+  --sidebar-bg: #f8fafc;
+  --chat-bg: #ffffff;
+  --header-bg: #f1f5f9;
 
   /* Borders */
   --border-subtle: #f0f0f0;
