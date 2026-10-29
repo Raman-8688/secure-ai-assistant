@@ -28,14 +28,25 @@ export class ChatUiComponent implements OnInit, OnDestroy {
   isLoading = false;
   isLoadingHistory = false;
 
+  // Active Groq Models (Ultra-fast, high reliability, free forever)
   availableModels = [
-    { id: 'meta/llama-3.1-8b-instruct', name: 'Llama 3.1 8B (Fast & Verified Working)' },
-    { id: 'meta/llama-3.3-70b-instruct', name: 'Llama 3.3 70B (High Intelligence)' },
-    { id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek R1 (Reasoning AI)' },
+    { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B (High Intelligence & Fast)' },
+    { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B (Ultra Fast)' },
+    { id: 'deepseek-r1-distill-llama-70b', name: 'DeepSeek R1 Distill 70B (Reasoning)' },
+    { id: 'mixtral-8x7b-32768', name: 'Mixtral 8x7B (High Context)' },
+    { id: 'gemma2-9b-it', name: 'Google Gemma 2 9B' }
+  ];
+  selectedModel: string = 'llama-3.3-70b-versatile';
+
+  /* Previous NVIDIA Models (kept for reference):
+  availableModelsNvidia = [
+    { id: 'meta/llama-3.1-8b-instruct', name: 'Llama 3.1 8B (NVIDIA - Expired)' },
+    { id: 'meta/llama-3.3-70b-instruct', name: 'Llama 3.3 70B (NVIDIA - Expired)' },
+    { id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek R1' },
     { id: 'mistralai/mistral-large-2-instruct', name: 'Mistral Large 2' },
     { id: 'google/gemma-2-9b-it', name: 'Google Gemma 2 9B' }
   ];
-  selectedModel: string = 'meta/llama-3.1-8b-instruct';
+  */
 
   toastMessage = '';
   toastType: 'error' | 'warning' | 'info' = 'error';

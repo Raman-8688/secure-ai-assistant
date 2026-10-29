@@ -29,7 +29,13 @@ public class AIController {
             Authentication authentication) {
         try {
             String question = body.get("question");
-            String model = body.getOrDefault("model", "meta/llama-3.1-8b-instruct");
+
+            // Groq default model:
+            String model = body.getOrDefault("model", "llama-3.3-70b-versatile");
+
+            // Previous NVIDIA default model (kept for reference):
+            // String model = body.getOrDefault("model", "meta/llama-3.1-8b-instruct");
+
             if (question == null || question.isBlank()) {
                 return ResponseEntity.badRequest().body(Map.of("error", "Question cannot be empty"));
             }
